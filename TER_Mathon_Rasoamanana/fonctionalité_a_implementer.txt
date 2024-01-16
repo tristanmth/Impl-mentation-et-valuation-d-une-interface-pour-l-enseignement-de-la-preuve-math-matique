@@ -1,0 +1,22 @@
+recherche des fonctionalité a implementer dan sl etableau de variation: 
+	+ on sait que 
+	+ on a
+	+ on veut démontrer 
+	+ on pose 
+	+ si/alors/donc
+	+ trivial
+maintenant qu'on a certaines fonctionalite on cherche a créer une structure général du probleme sous la forme 
+
+On veut demontrer que ...
+ | On pose ...
+ | | on sait que...
+ | | | On a...
+
+Lorsque l'on trouve un resultat, par exemple un valeur interdite ou une racine, cette derniere s'implémente directement dans le tableau de variation. Mais cela implique un probleme "Est ce que l'eleve pourra toujours interagir avec le tableau de variation? en tout cas dans le meme "mode" ou il ecris ces demonstration?"
+
+
+Nous avons parlé aussi des technologies, nous avons eu la piste de svg mais ce langage est "particulier". Le fait que le logiciel sur lequel nous allons interagir est jscoq alors nous pensons que faire l'interface en js et en css serait plus interressant, de plus il existe de nombreuse bibliotheque en js. De plus js peut faire des requetes a jscoq
+Il faudra qu'on se renseigne sur les biblio existantes, et en trouver une qui soit relativement standard (compréhensible) pour pouvoir etre comprise par pas mal de monde et ainsi etre modifier, au lieu d'etre supprimée.
+
+On a fait la connaissance avec coq_waterproof, qui au lieu d'etre ecrit en tactic en langage coq, elles sont ecrient en langage courant, ce qui sera plus simple au eleves de comprendre, le bemol c'est qu'il ne faut pas faire de faute de frappe sinon une erreu coq ne comprendra pas
+

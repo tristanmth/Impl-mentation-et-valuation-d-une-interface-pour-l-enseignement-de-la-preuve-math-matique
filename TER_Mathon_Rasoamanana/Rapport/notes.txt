@@ -1,0 +1,76 @@
+Mercredi 22/11/2023
+	Etablir une échéance
+		1.Décortiquer coq
+		2.Etat de l'art sur les possibilités en terme de technologies
+		3.Propositions d'idées
+		4.Limmites et possibilités(ce qu'on sera en mesure de faire) 
+	
+	Explorations/Idées possibles
+		Traduction(images-->textes)	
+		Bouton de génération de flèche
+			Flèche traduite en texte
+				Programmation objet
+				JASON 
+				Cours JASON p194 jasonschema(Définition optionnelle des propriétées)
+			Texte interprétable par coq 
+	
+	Demander à ce qu'on puisse avoir la conception du faux coq
+		Aide à décortiquer coq (algo derrière)
+
+	Propositions d'interface
+
+	Idée 1: Mettre l'interaction dans une modalité à part.
+        	Il y a des buts (diviser de bout en bout) à atteindre--> Si tous les buts sont ok! OK
+	  	Symbole "?" Rend explicite ce qui était implicite dans le tableau
+
+		Test --> Qu'en pensent les utilisateurs?
+
+Vendredi 24 Novembre	
+	Prototypes interface coq (Scénario d'utilisation)
+		Fonction X²
+		Fonction /X-1 
+	Natural Number Game
+
+Mercredi 29 Novembre
+	Mettre les prototypes et les diagrammes sur Git
+	Enoncé type de consignes 
+	Revoir l'objectif de l'interface
+
+Mercredi 06 decembre
+
+	+ SVG peut etre interessant a utiliser d'un point de vu graphique pour ajouter, supprimer des schémas...
+	+ Définition API : "Application programming interface, est un programme permettant à deux applications distinctes de communiquer entre elles et d’échanger des données. Cela évite 	notamment de recréer et redévelopper entièrement une application pour y ajouter ses informations. Par exemple, elle est là pour faire le lien entre des données déjà existantes et 	un programme indépendant. Par exemple, si vous souhaitez intégrer une carte Google sur votre site Internet, vous utiliserez une API Google Maps" 	https://datascientest.com/api-tout-savoir
+	+ Définition de framework :
+	+ Framework frontend : vue.js, react, AngularJS ...
+	+ Framework backend : PHP, Java, Python, Ruby ... 
+
+Vendredi 15 décembre 
+
+recherche des fonctionalité a implementer dan sl etableau de variation: 
+	+ on sait que 
+	+ on a
+	+ on veut démontrer 
+	+ on pose 
+	+ si/alors/donc
+	+ trivial
+maintenant qu'on a certaines fonctionalite on cherche a créer une structure général du probleme sous la forme 
+
+On veut demontrer que ...
+ | On pose ...
+ | | on sait que...
+ | | | On a...
+
+Lorsque l'on trouve un resultat, par exemple un valeur interdite ou une racine, cette derniere s'implémente directement dans le tableau de variation. Mais cela implique un probleme "Est ce que l'eleve pourra toujours interagir avec le tableau de variation? en tout cas dans le meme "mode" ou il ecris ces demonstration?"
+
+
+Nous avons parlé aussi des technologies, nous avons eu la piste de svg mais ce langage est "particulier". Le fait que le logiciel sur lequel nous allons interagir est jscoq alors nous pensons que faire l'interface en js et en css serait plus interressant, de plus il existe de nombreuse bibliotheque en js. De plus js peut faire des requetes a jscoq
+Il faudra qu'on se renseigne sur les biblio existantes, et en trouver une qui soit relativement standard (compréhensible) pour pouvoir etre comprise par pas mal de monde et ainsi etre modifier, au lieu d'etre supprimée.
+
+On a fait la connaissance avec coq_waterproof, qui au lieu d'etre ecrit en tactic en langage coq, elles sont ecrient en langage courant, ce qui sera plus simple au eleves de comprendre, le bemol c'est qu'il ne faut pas faire de faute de frappe sinon une erreu coq ne comprendra pas
+
+
+
+
+
+
+	
