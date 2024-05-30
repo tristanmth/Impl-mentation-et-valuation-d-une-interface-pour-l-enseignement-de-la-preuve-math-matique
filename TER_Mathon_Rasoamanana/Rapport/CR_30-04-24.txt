@@ -1,0 +1,43 @@
+Voir les documents à rendre et organisation. 
+
+Combiner les maquettes 
+ Il faut 4 zones: --> V1
+ 
+  -2 zones pour l'élève 
+   -Partie textuelle 
+    Ex: Appeler des modules implémentées. "Fonction définition"
+   -Partie graphique --> V0.1
+    Compléter le tableau de variation. 
+     Pouvoir modifier les données(changer, supprimer, ajouter). 
+    Entrer la fonction à traiter
+	mettre le tableau de variation dans la partie du haut afin d'inciter l'utilisateur a l'utiliser en premier
+
+  -2 zones pour les retours de Coq
+   -Description de ce qu'il se passe 
+    Ex: "Une fonction a été entrée" , "Fonction valide"
+   -Retours sur les erreurs et les incohérences
+    Il faut un bouton [?] V0
+    Les erreurs s'affichent dans cette zone seulement lorsque le bouton [?] est cliqué. 
+    L'élève peut compléter son tableau graphiquement même s'il y a des erreurs. 
+    Si une erreur est corrigée, l'affichage est actualisé quand on appuie de noueveau sur le bouton [?]. 
+ 
+Pour indiquer qu'il y a une erreur:   
+ -Idée 1 : catégoriser les erreurs et y mettre des codes couleurs.
+ (La couleur du bouton changera en fonction de type d'erreur.) 
+ -Idée 2 : Ne pas sépcifier l'emplacement de des erreurs sur le graphique. 
+ (J'ai du mal à savoir comment on pourrait le faire. Peut-être en utilisant des couleurs aussi en surlignant le fond de la ou il y a l'erreur.) ==> def les types d'erreur
+ -Idée 3 : faire vibrer légèrement le bouton pour dire qu'il y a une "erreur"
+ -Idée 4 : le bouton devient cliquable des la premiere "erreur"
+
+A faire : 
+Finir la documentation de l'API 
+-->Est-ce que ça fait partie de la documentation interne ?
+
+
+
+
+
+
+J'ai 4 fois l'âge que tu avais quand j'avais l'âge que tu as 
+J'ai 40 ans
+Quel âge as-tu ?

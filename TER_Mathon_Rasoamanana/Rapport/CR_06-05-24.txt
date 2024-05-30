@@ -1,0 +1,43 @@
+06/05/2024
+
+** Réfection a propos de la maquette **
+
+
+* Maquette en 4 parties *
+ - En haut a gauche : tableau de variation + function_definition(…)
+	- cela permet de "forcer" l'utilisateur d'utiliser le tableau de variation
+ - En bas a gauche : zone de texte de l'utilisateur
+	- partie de gauche est dédier a l'utilisateur (comme dans le logiciel de coq)
+ - En haut a droite : Retour erreur faite par l'utilisateur
+ - En bas a droite : Retour "automatique" de coq en fonction de ce qu'a ecris l'utilisateur
+	- Les retours peuvent etre fait dès que l'utilisateur utilise des "outils" (cf plus bas) ou des retours des fonction tels que validate(…)…
+
+
+* Outils *
+fonction qui aide l'utilisateurs afin de remplir au mieux son tableau de variation, les fonctions peuvent etre : 
+ - isPositive(…) 
+ - Compare_value(…)
+ - …
+
+* Utilisation du tableaude variation * 
+ - Compléter le tableau de variation. 
+ - Pouvoir modifier les données(changer, supprimer, ajouter). 
+
+* Bouton [?] * 
+ /!\ Dans tous les cas l'utilisateur peut continuer d'ecrire et de remplir la tableau meme si il y a des erreurs
+ /!\ Si une erreur est corrigée, l'affichage est actualisé quand on appuie de noueveau sur le bouton [?]. 
+
+Emplacement
+ - 1 : en haut a droite dans la partie tableau de variation
+ - 2 : a cheval entre les deux parties de l'utilisateur
+Retour
+ - 1 : mettre des "?" au dessus de chaque erreur 
+ - 2 : Catégoriser les erreur pour colorier le bouton de la couleur de la plus "grosse" erreur
+ - 3 : catégoriser les erreur et une fois le bouton appuyer surligner les erreur de la couleur correspondante
+ - 4 : des que l'utilisateur écris une erreur le bouton vibre doucement
+ - 5 : le bouton devient cliquable des la première erreur
+
+* Correction du graphique * 
+Fleche croissante et decroissante
+ - pour démontrer si c'est décroissant ou croissant faire en fonction de la fonction au lieu de la dérivé ,car cela permettrai de ne pas corriger le croissance ou décroissance en fonction du signe de la dérivé que l'élevé a mis, mais directement en fonction de la fonction.
+
