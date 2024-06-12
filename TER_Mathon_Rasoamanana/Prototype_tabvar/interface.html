@@ -40,8 +40,8 @@
             </div>
             <div class="enter_deriv_function"><span id="deriv-function">f</span> '(<span id="deriv-var">x</span>) = </span> <input id="function-derivation" placeholder="5*x"/></div>
             
-            <button class="buton_removeline" onclick="removeMiddleRows()">Supprimer les lignes intermédiaires</button>
             <button class="buton_addline" onclick="addExtraRow()">Ajouter une ligne </button>
+            <button class="buton_removeline" onclick="removeMiddleRows()">Supprimer les lignes intermédiaires</button>
 
             <!-- <div id="functionsContainer"></div> -->
 
@@ -150,7 +150,9 @@
             <!-- <button onclick="compareExpressionsInRow()">comparer les valeurs de x</button> -->
             <button onclick="clearErrorMessage(); validation_funMain()">valider main function</button>
             <button onclick="clearErrorMessage();validation_funDeriv()">valider deriv function</button>
-            <button onclick="clearErrorMessage();verification_funDeriv()">verifier deriv function</button>
+            <button onclick="clearErrorMessage();env = 0 ; var name_var_tabvar = document.getElementById('deriv-var').textContent  ; 
+            var function_main = document.getElementById('function-expr').value ; var supp_var = tabvar.suppose_var(env, name_var_tabvar);
+            env = supp_var[1];verification_funDeriv(env)">verifier deriv function</button>
             <button onclick="clearErrorMessage();validation_subFun()">Les sous fonctions</button>
 
             <span id="comparison_result"></span>

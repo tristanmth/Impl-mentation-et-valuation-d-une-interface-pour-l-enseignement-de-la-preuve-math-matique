@@ -180,11 +180,11 @@ function showAide(){
         <h2>${text_zone}</h2>
         <ul>
             <li><label class="TitleApi">Description </label><br><p id="container1">${desc.length > 1 ? desc.join('<br>') : desc}</p></li>
-            <li><label class="TitleApi">Entrée théorique </label><br><p id="container1">${ent_th.length > 1 ? ent_th.join('<br>') : ent_th}</p></li>
-            <li><label class="TitleApi">Arguments de l'entrée </label><br><p id="container1">${ent_th_arg.length > 1 ? ent_th_arg.join('<br>') : ent_th_arg}</p></li>
+            <li><label class="TitleApi">Entrée théorique avec les arguments </label><br><p id="container1">${ent_th.length > 1 ? ent_th.join('<br>') : ent_th}</p></li>
+            <li><label class="TitleApi">Définition des arguments en entré </label><br><p id="container1">${ent_th_arg.length > 1 ? ent_th_arg.join('<br>') : ent_th_arg}</p></li>
             <li><label class="TitleApi">Retour théorique </label><br><p id="container1">${ret_th.length > 1 ? ret_th.join('<br>') : ret_th}</p></li>
-            <li><label class="TitleApi">Arguments du retour</label><br><p id="container3">${ret_th_arg.length > 1 ? ret_th_arg.join('<br>') : ret_th_arg}</p></li>
-            <li><label class="TitleApi">Entrée et retour pratiques </label><br><p id="container1">${ent_ret_prat.length > 1 ? ent_ret_prat.join('<br>') : ent_ret_prat}</p></li>
+            <li><label class="TitleApi">Définition des arguments en sortie</label><br><p id="container3">${ret_th_arg.length > 1 ? ret_th_arg.join('<br>') : ret_th_arg}</p></li>
+            <li><label class="TitleApi">Cas pratiques </label><br><p id="container1">${ent_ret_prat.length > 1 ? ent_ret_prat.join('<br>') : ent_ret_prat}</p></li>
             <li><label class="TitleApi">Retour d'erreur </label><br><p id="container1">${ret_err.length > 1 ? ret_err.join('<br>') : ret_err}</p></li>
         </ul>
     `;

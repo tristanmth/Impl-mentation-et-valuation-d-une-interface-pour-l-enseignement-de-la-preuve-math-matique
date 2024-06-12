@@ -4,19 +4,19 @@
 
 const tabvarMethods1 = [
     "init()",
-    "function_definition()",
-    "validate()",
-    "deriv()",
-    "compare_values()",
-    "simplify()",
-    "develop()",
-    "interval()",
-    "suppose_var()",
-    "is_positive()",
-    "print_env()",
-    "defined()",
-    "suppose()",
-    "proof_assistant()"
+    "function_definition(env, f, var, expr)",
+    "validate(env, expr)",
+    "deriv(env, var, expr)",
+    "compare_values(env, expr1, expr2)",
+    "simplify(env, expr)",
+    "develop(env, expr)",
+    "interval(env, expr)",
+    "suppose_var(env, x)",
+    "is_positive(env, expr)",
+    "print_env(env)",
+    "defined(env, expr)",
+    "suppose(env, prop)",
+    "proof_assistant(env, cmd)"
 ];
 
 $(document).ready(function() {
@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     $("#command-textarea").on('keydown', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent the default behavior of the Enter key
+            event.preventDefault(); 
             onEnter(event);
         }
     });
@@ -50,23 +50,19 @@ function insertAtSecondLine(text) {
     const lines = value.split('\n');
 
     if (lines.length < 2) {
-        // If there are less than 2 lines, append a new line and the text
         lines.push('');
     }
     
-    // Insert the text at the second line
     lines.splice(1, 0, text);
 
-    // Join the lines back into a single string and set the value
     textarea.val(lines.join('\n'));
 
-    // Set the cursor to the end of the inserted text
     const cursorPos = lines.slice(0, 2).join('\n').length;
     textarea[0].selectionStart = textarea[0].selectionEnd = cursorPos;
 }
 
 function onEnter(event) {
-    const value = event.target.value.trim(); // Trim to remove whitespace
+    const value = event.target.value.trim(); 
     if (Array.isArray(tabvarMethods1) && tabvarMethods1.includes(value.split('(')[0] + '()')) {
         ExecutApi(value);
     } else {
@@ -82,7 +78,6 @@ function ExecutApi(command) {
     if (parsedFunction) {
         const { functionName, params } = parsedFunction;
 
-        // Map the parameters to variables
         const paramVariables = params.map((param, index) => `var param${index + 1} = '${param}'`).join('; ');
         eval(paramVariables);
 

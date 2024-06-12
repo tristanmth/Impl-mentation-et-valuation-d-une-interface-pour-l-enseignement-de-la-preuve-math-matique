@@ -6,13 +6,10 @@ html, body {
     padding: 0;
 }
 .buton_addline{
-    margin-left: 10%;
-    margin-top: -30px;
-
+    margin-left: 20%;
 }
 .buton_removeline{
-    margin-left: 40%;
-    margin-top: -90px;
+    margin-left: 4%;
 }
 .container {
     border: 1px solid #000;
