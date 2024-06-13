@@ -214,13 +214,9 @@ function ExecutApi(command) {
             default:
                 result1 = `Erreur: Nom de fonction invalide '${functionName}'.`;
         }
-
         insertAtSecondLine(result1);
-    } else {
-        insertAtSecondLine(result1);
-    }
+    } 
 }
-
 
 function parseFunctionString(funcStr) {
     const funcPattern = /^(\w+)\((.*)\)$/;
