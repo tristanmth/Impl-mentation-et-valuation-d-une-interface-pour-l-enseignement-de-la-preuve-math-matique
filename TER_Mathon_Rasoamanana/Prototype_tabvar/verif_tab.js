@@ -40,7 +40,7 @@ function validation_funMain(env){
 // Gestion des erreurs fait par l'utilisateur dans le tableau de variation
 function message_error (message_tabvar_fun){
     if (message_tabvar_fun[0]=="2"){
-        messageInErrorMessage("expression valide : " + message_tabvar_fun[message_tabvar_fun.length-1]);
+        messageInErrorMessage("Expression valide : " + message_tabvar_fun[message_tabvar_fun.length-1]);
     }
     else if(message_tabvar_fun[0]=="1.9"){
         messageInErrorMessage("Erreur interne, veuillez nous excuser.");
@@ -158,7 +158,7 @@ function validation_subFun(env){
             }
         }
     }else if(nb_subFun==0){
-        var message ="Pas de sous fonction";
+        var message ="Pas de sous fonction.";
         messageInErrorMessage(message);
     }
     messageInErrorMessage(subFun);

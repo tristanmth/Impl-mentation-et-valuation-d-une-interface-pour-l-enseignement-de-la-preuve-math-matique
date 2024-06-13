@@ -98,13 +98,6 @@ function onEnter(event) {
         alert("La commande n'existe pas.");
     }
 }
-////////////////////////////////////////////////////
-
-
-
-
-
-
 
 function ExecutApi(command) {
     console.log(`Executing API with command: ${command}`);
