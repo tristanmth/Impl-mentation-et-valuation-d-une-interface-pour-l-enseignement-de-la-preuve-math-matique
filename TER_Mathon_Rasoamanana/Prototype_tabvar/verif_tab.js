@@ -10,16 +10,15 @@ function mainFunction(){
             compareExpressionsInRow(ret.env);
         }
         else{
-            message = "La dérivé ne peut pas etre lue"
+            message = "La dérivée ne peut pas etre lue."
             messageInErrorMessage(message)
         }
     }
     else{
-        message = "La fonction principal ne peut pas etre lue"
+        message = "La fonction principale ne peut pas etre lue."
         messageInErrorMessage(message)
     }
 }
-
 
 // Fonction qui permet de nettoyé la zone de texte
 function clearErrorMessage() {
@@ -44,7 +43,7 @@ function message_error (message_tabvar_fun){
         messageInErrorMessage("expression valide : " + message_tabvar_fun[message_tabvar_fun.length-1]);
     }
     else if(message_tabvar_fun[0]=="1.9"){
-        messageInErrorMessage("Erreur intern, veuillez nous excuser");
+        messageInErrorMessage("Erreur interne, veuillez nous excuser.");
     }
     else{
         messageInErrorMessage(message_tabvar_fun[1]);
@@ -58,7 +57,6 @@ function messageInErrorMessage(message) {
     p.textContent = message;
     errorMessage.appendChild(p);
 }
-
 
 // Fonction pour comparer les valeurs dans la premiere ligne du tableau
 function compareExpressionsInRow(env) {
@@ -92,33 +90,26 @@ function getColumnCount(tableId) {
     return firstRow.cells.length;
 }
 
-
-
-
-
 // Gestion des erreurs fait par l'utilisateur dans le tableau de variation dan sle cas de la verification de la derivé
 function message_compareValues (compare_values){
     if (compare_values[0]=="2"){
         if (compare_values[1]=="="){
-            messageInErrorMessage("La dérivé est bonne! ");   
+            messageInErrorMessage("La dérivée est bonne!");   
         }
         else if(compare_values[1]=="?"){
-            messageInErrorMessage("Impossible de vérifier la dérivé, veuillez nous excuser");
+            messageInErrorMessage("Impossible de vérifier la dérivée, veuillez nous excuser.");
         }
         else{
-            messageInErrorMessage("La dérivé n'est pas bonne");
+            messageInErrorMessage("La dérivée n'est pas bonne.");
         }  
     }
     else if(compare_values[0]=="1.9"){
-        messageInErrorMessage("Erreur intern, veuillez nous excuser");
+        messageInErrorMessage("Erreur interne, veuillez nous excuser.");
     }
     else{
         messageInErrorMessage(compare_values[1]);
     }
 }
-
-
-
 
 // Permet de verifier si la dérivé de la fonction entré par l'utilisateur est validé par l'API
 function validation_funDeriv(env){
