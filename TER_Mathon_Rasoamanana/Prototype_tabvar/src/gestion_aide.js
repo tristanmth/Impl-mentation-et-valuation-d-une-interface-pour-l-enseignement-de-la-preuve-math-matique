@@ -2,6 +2,9 @@
 //-----------------------GESTION DE LA PARTIE AIDE-----------------------
 //-----------------------------------------------------------------------
 
+//On Déclare une variable  tabvarMethods qui contient toutes les fonctions. 
+//Ces fonctions seront proposées pour l'auto-complétion dans la zone dédiée lorsqu'un caractère est tapé. 
+//Cette procédure nécessite l'utilisation de la bibliothèque JQueryUI (importée dans interface.html)
 const tabvarMethods = ["init()", "function_definition()", "validate()", "deriv()", "compare_values()", "simplify()", "develop()", "interval()", "suppose_var()", "is_positive()", "print_env()", "defined()", "suppose()", "proof_assistant()"];
 
 $(document).ready(function() {
@@ -26,6 +29,7 @@ $(document).ready(function() {
     });
 });
 
+//Montrer l'aide quand on appuie sur la touche Enter
 document.addEventListener('DOMContentLoaded', (event) => {
     const inputField = document.getElementById('command-input');
 
@@ -36,6 +40,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+//Fonction qui permet de montrer les informations pour chaque fonction dans tabvarMethods
 function showAide(){
 
     var text_zone = document.getElementById("command-input").value;
@@ -170,9 +175,12 @@ function showAide(){
         ent_th_arg.push("env : correspond à l'environnement actuel","cmd : (string) commande d’assistant de preuve à traiter ");
         ret_th.push("→Array[valid, new_env,  mess]");
         ret_th_arg.push("valid : indique l’état de la validation","new_env : Nouvel environnement","mess");
-        ent_ret_prat.push("tabvar.proof_assistant(env, Variable y : real. Hypothesis (H1 : y > 3) (H2 : y < 4). Lemma prop : (y > 2). Proof. Qed.')","→Array[2, Array(6), Array(4)]");
+        ent_ret_prat.push("proof_assistant(env, Variable y : real. Hypothesis (H1 : y > 3) (H2 : y < 4). Lemma prop : (y > 2). Proof. Qed.')","→Array[2, Array(6), Array(4)]");
         ret_err.push("Non défini");
     }else{
+        //Pour les fonctions qui n'existent pas où si le caractère vide "" est entré.  
+        //Etant donné qu'une structure est définie pour la sortie des informations, 
+        //on complète les zones par "Indisponible !" pour garder la structure. 
         text_zone = "Cette commande n'esxiste pas !"
         desc.push("Indisponible !");
         ent_th.push("Indisponible !");
@@ -183,9 +191,9 @@ function showAide(){
         ret_err.push("Indisponible !");
     }
 
+    // Structure de la sortie sur l'interface 
     const newContent = document.createElement('div');
 
-    // Ajouter le contenu HTML au nouvel élément
     newContent.innerHTML = `
         <h2>${text_zone}</h2>
         <ul>
@@ -199,13 +207,14 @@ function showAide(){
         </ul>
     `;
 
-    // Supprimer le dernier élément ajouté
-    const box4 = document.querySelector(".box4");
+    // Gestion de l'affichage de la sortie  
+    // On veut un affichage unique pour chaque fonction. 
+    // On supprime le dernier affichage à chaque fois qu'une nouvelle fonction est entrée et ajoute le nouvel affichage  
+    const box4 = document.querySelector(".box4"); // Supprimer le dernier élément ajouté
     if (box4.lastChild) {
         box4.removeChild(box4.lastChild);
     }
 
-    // Ajouter le nouvel élément à la fin de .box4
-    document.querySelector(".box4").appendChild(newContent);
+    document.querySelector(".box4").appendChild(newContent); // Ajouter le nouvel élément à la fin de .box4
 
 }

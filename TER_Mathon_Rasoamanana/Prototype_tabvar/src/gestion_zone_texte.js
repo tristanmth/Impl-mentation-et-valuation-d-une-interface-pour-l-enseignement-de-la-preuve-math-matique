@@ -2,22 +2,13 @@
 //-------------------GESTION DE LA ZONE TEXTUELLE-------------------
 //------------------------------------------------------------------
 
-const tabvarMethods1 = [
-    "init()",
-    "function_definition()",
-    "validate()",
-    "deriv()",
-    "compare_values()",
-    "simplify()",
-    "develop()",
-    "interval()",
-    "suppose_var()",
-    "is_positive()",
-    "print_env()",
-    "defined()",
-    "suppose()",
-    "proof_assistant()"
-];
+//On Déclare une variable  tabvarMethods1 qui contient toutes les fonctions. 
+//Ces fonctions seront proposées pour l'auto-complétion dans la zone dédiée lorsqu'un caractère est tapé. 
+//Cette procédure nécessite l'utilisation de la bibliothèque JQueryUI et JQuery (importées dans interface.html)
+//La fonction sera éditée dans une zone textarea
+// la 1ere ligne de la zone est dédiée à l'entrée de la fonction
+// la 2e ligne de la zone est dédiée à la sortie 
+const tabvarMethods1 = ["init()", "function_definition()", "validate()", "deriv()", "compare_values()", "simplify()", "develop()", "interval()", "suppose_var()", "is_positive()", "print_env()", "defined()", "suppose()", "proof_assistant()"];
 
 $(document).ready(function() {
     $("#command-textarea").on('input', function(event) {
@@ -26,7 +17,7 @@ $(document).ready(function() {
         
         if (lines.length > 1) {
             const firstLine = lines[0];
-            $(this).val(firstLine); // Rétablit seulement la première ligne
+            $(this).val(firstLine); 
             this.selectionStart = this.selectionEnd = cursorPos > firstLine.length ? firstLine.length : cursorPos;
         }
     });
@@ -36,10 +27,10 @@ $(document).ready(function() {
         const lines = this.value.split('\n');
 
         if (event.key === 'Enter') {
-            event.preventDefault(); // Empêche l'ajout d'une nouvelle ligne
+            event.preventDefault(); 
             onEnter(event);
         } else if (lines.length > 1 && cursorPos > lines[0].length) {
-            event.preventDefault(); // Empêche la modification en dehors de la première ligne
+            event.preventDefault(); 
         }
     });
 
@@ -73,6 +64,7 @@ $(document).ready(function() {
     });
 });
 
+// Fonction qui permet d'insérer les retours de la fonction dans la 2e ligne de la zone de texte. (Nb : Cette ligne est non éditable.)
 function insertAtSecondLine(text) {
     const textarea = $("#command-textarea");
     const value = textarea.val();
@@ -90,17 +82,11 @@ function insertAtSecondLine(text) {
     textarea[0].selectionStart = textarea[0].selectionEnd = cursorPos;
 }
 
-function onEnter(event) {
-    const value = event.target.value.trim(); 
-    if (Array.isArray(tabvarMethods1) && tabvarMethods1.includes(value.split('(')[0] + '()')) {
-        ExecutApi(value);
-    } else {
-        alert("La commande n'existe pas.");
-    }
-}
-
+// Fonction  qui permet d'executer les fonctions (commandes) éditées dans la zone de texte.
+// Elle utilise le module "tabvar" qui contiennent les traitements spécifique à chaque foonction. 
+// Elle utilise aussi la fonction parseFunctionString  
 function ExecutApi(command) {
-    console.log(`Executing API with command: ${command}`);
+    console.log(`Execution de la commande : ${command}`);
     
     const parsedFunction = parseFunctionString(command);
 
@@ -218,6 +204,7 @@ function ExecutApi(command) {
     } 
 }
 
+//Permet de créer un nom de fonction et ses paramètres
 function parseFunctionString(funcStr) {
     const funcPattern = /^(\w+)\((.*)\)$/;
     const match = funcPattern.exec(funcStr);
@@ -227,4 +214,14 @@ function parseFunctionString(funcStr) {
         return { functionName, params };
     }
     return null;
+}
+
+//Executer la commande entrée quand on appuie sur la touche Enter
+function onEnter(event) {
+    const value = event.target.value.trim(); 
+    if (Array.isArray(tabvarMethods1) && tabvarMethods1.includes(value.split('(')[0] + '()')) {
+        ExecutApi(value);
+    } else {
+        alert("La commande n'existe pas.");
+    }
 }
