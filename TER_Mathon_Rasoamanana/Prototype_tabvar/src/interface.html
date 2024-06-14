@@ -33,7 +33,6 @@
         <!--affichage du tableau-->
         <div class="box1">
 
-
             <div class="enter_function">
                 <input id="function-name"  style ="width: 10px;" placeholder="f" /> (<input id="var-name" style ="width: 10px;" placeholder="x"/>) = 
                 <input id="function-expr" placeholder="5*x*x-1"/>
@@ -47,7 +46,7 @@
 
             <table id="tabvar">
             <tr>
-                <td class="col1"><span id="first-cell">x</span></td>
+                <td class="col1"><span id="first-cell"></span>x</td>
                 <td class="additional-column">
                     <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
                         <div class="value" type="button">-80</div>
@@ -181,8 +180,6 @@
 
     <script>
         changeVarFun();
-
-        document.addEventListener('DOMContentLoaded', initializeTable);
 
         // Ajoute un gestionnaire d'événement pour la soumission du formulaire
         document.getElementById('tabvar').addEventListener('submit', function(event) {

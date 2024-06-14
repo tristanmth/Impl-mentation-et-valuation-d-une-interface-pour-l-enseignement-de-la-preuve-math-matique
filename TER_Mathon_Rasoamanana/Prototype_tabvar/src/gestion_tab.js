@@ -7,18 +7,30 @@ function adjustInputWidth(input) {
     input.style.width = ((input.value.length +1)*8) + 'px'; // Ajuster la largeur en fonction de la longueur du texte
 }
 
-// fonction qui permet d'afficher les valeur qui se trouvent dans les lignes
-function showValues(){
-    // Récupére le tableau
-    var table = document.getElementById("tabvar");
-    // Récupére la première ligne du tableau
-    var firstRow = table.rows[0];
-    var beforLastRow = table.rows[table.rows.length -2];
-    var lastRow = table.rows[table.rows.length -1];
+// Fonction qui permet d'afficher les valeur qui se trouvent dans les lignes
+function showValues() {
 
-    // Récupére les cellules de la première ligne
+    // Erreur d'accès à l'élément lors de la récupération du tableau.
+    var table = document.getElementById("tabvar");
+    if (!table) {
+        console.error("Le tableau avec l'ID 'tabvar' n'existe pas.");
+        return;
+    }
+
+    // Erreur d'index. Vérifie si le tableau a au moins 3 lignes
+    if (table.rows.length < 3) {
+        console.error("Le tableau doit contenir au moins 3 lignes.");
+        return;
+    }
+
+    // Récupère les lignes du tableau
+    var firstRow = table.rows[0];
+    var beforeLastRow = table.rows[table.rows.length - 2];
+    var lastRow = table.rows[table.rows.length - 1];
+
+    // Récupère les cellules de chaque ligne
     var cells1 = firstRow.cells;
-    var cells2 = beforLastRow.cells;
+    var cells2 = beforeLastRow.cells;
     var cells3 = lastRow.cells;
 
     // Initialise une variable pour stocker les valeurs
@@ -26,56 +38,83 @@ function showValues(){
     var values2 = [];
     var values3 = [];
 
-    // Parcour les cellules de la première ligne et récupérer les valeurs
-    for (var i = 1; i < cells1.length; i += 2) {
-        values1.push(cells1[i].innerText);
-    }
-    for (var i = 2; i < cells2.length-1; i += 1) {
-        if(cells2[i].innerText=="||"){
-            values2.push("VI")
-        } else if(cells2[i].innerText=="∅") {
-            values2.push("NI")
-        } else if(cells2[i].innerText=="0") {
-            values2.push("0")
-        } else if(cells2[i].innerText=="+"){
-            values2.push("pos")
-        } else if(cells2[i].innerText=="-") {
-            values2.push("neg")
-        } else {        
-            values2.push(cells2[i].innerText);
-        };
-    }
-    for (var i = 2; i < cells3.length; i += 2) {
-        if(cells3[i].innerText=="↘"){
-            values3.push("down")
-        } else if(cells3[i].innerText=="↗") {
-            values3.push("up")
-        } else {        
-            values3.push(cells3[i].innerText);
+    // Parcourt les cellules de la première ligne et récupère les valeurs
+    for (let i = 1; i < cells1.length; i += 2) {
+        if (cells1[i]) {
+            values1.push(cells1[i].innerText);
         }
     }
-    return([[values1], [values2], [values3]]);
+
+    for (let i = 2; i < cells2.length - 1; i++) {
+        if (cells2[i]) {
+            switch (cells2[i].innerText) {
+                case "||":
+                    values2.push("VI");
+                    break;
+                case "∅":
+                    values2.push("NI");
+                    break;
+                case "0":
+                    values2.push("0");
+                    break;
+                case "+":
+                    values2.push("pos");
+                    break;
+                case "-":
+                    values2.push("neg");
+                    break;
+                default:
+                    values2.push(cells2[i].innerText);
+            }
+        }
+    }
+
+    for (let i = 2; i < cells3.length; i += 2) {
+        if (cells3[i]) {
+            switch (cells3[i].innerText) {
+                case "↘":
+                    values3.push("down");
+                    break;
+                case "↗":
+                    values3.push("up");
+                    break;
+                default:
+                    values3.push(cells3[i].innerText);
+            }
+        }
+    }
+
+    return [[values1], [values2], [values3]];
 }
 
+//Récupération des valeurs spécifiques selon l'index fourni.
 function getValues(index) {
     var values = showValues();
     var result;
-    
-    if (index == 1){
-        result = values[0];
-    } else if (index == 2 ){
-        result = values[1];
-    } else if (index == 3 ){
-        result = values[2];
-    } else {
-        alert("Veuillez saisir 1 pour les valeurs de x, 2 pour la ligne de signe de la dérivée, et 3 pour les variations de la fonction");
+
+    //Erreur de validité des valeurs retournée par showValues(). 
+    if (!Array.isArray(values) || values.length !== 3) {
+        console.error("Les valeurs retournées par showValues() sont invalides.");
         return;
     }
 
-    // document.getElementById("values").innerText = "Toutes les valeurs: " + result;
+    switch (index) {
+        case 1:
+            result = values[0];
+            break;
+        case 2:
+            result = values[1];
+            break;
+        case 3:
+            result = values[2];
+            break;
+        default:
+            //Erreur de paramètres. Si index est invalide.
+            console.error("Erreur paramètres : 1 pour valeurs de x, 2 pour signe de la dérivée, 3 pour variations de la fonction");
+            return;
+    }
     return result;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////// GESTION DES EVENEMENTS //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,72 +122,72 @@ function getValues(index) {
 
 ///////////////////////////////////////////////////////// GESTION DE LA PREMIERE COLONNE //////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-// Fonction d'initialisation
-function initializeTable() {
-    // Définit une lettre par défaut pour la première cellule
-    var defaultLetter = 'x';
-    document.getElementById('tabvar').setAttribute('data-first-cell-letter', defaultLetter);
-}
-
-// Change le nom de la fonctionprincipal et de la variable
-function changeVarFun(){
-    // Récupére l'élément input pour le nom de la variable
+function changeVarFun() {
+    // Récupère les éléments input pour le nom de la variable et de la fonction
     var varNameInput = document.getElementById("var-name");
     var functionNameInput = document.getElementById("function-name");
-    
-    // Ajoute un écouteur d'événements pour détecter les changements dans la zone de texte
+
+    // Vérifier l'existence du champs 
+    //d'entrée de nom de fonction et de variable
+    if (!varNameInput || !functionNameInput) {
+        console.error("Erreur : Les éléments input avec les ID 'var-name' ou 'function-name' n'existent pas.");
+        return;
+    }
+
+    // Ajoute un écouteur d'événements pour détecter les changements 
+    //dans la zone de texte pour le nom de la variable
     varNameInput.addEventListener("input", function() {
-        // Récupére la valeur saisie dans la zone de texte
+        // Récupère la valeur saisie dans la zone de texte
         var varName = varNameInput.value;
-    
-        // Met à jour le contenu de la cellule avec la nouvelle valeur
+
+        // Vérifie que les éléments cibles existent
         var derivVar = document.getElementById("deriv-var");
         var firstCellSpan = document.getElementById("first-cell");
         var lastCellVar = document.getElementById("last-cell-var");
         var beforeLastCellVar = document.getElementById("before-last-cell-var");
-        
-        derivVar.textContent = varName;    
-        firstCellSpan.textContent = varName;
-        lastCellVar.textContent = varName;
-        beforeLastCellVar.textContent = varName;
-        adjustInputWidth(varNameInput);
-    
+
+        if (derivVar && firstCellSpan && lastCellVar && beforeLastCellVar) {
+            // Met à jour le contenu de la cellule avec la nouvelle valeur
+            derivVar.textContent = varName;
+            firstCellSpan.textContent = varName;
+            lastCellVar.textContent = varName;
+            beforeLastCellVar.textContent = varName;
+            adjustInputWidth(varNameInput);
+        } else {
+            //Vérifier que le chanegement du nom de la variable 
+            //change aussi sur tous les emplacement spécifiés dans le tableau
+            console.error("Erreur d'affichage : Un ou plusieurs éléments de destination pour 'var-name' n'existent pas.");
+        }
     });
-    // Ajout un écouteur d'événements pour détecter les changements dans la zone de texte
+
+    // Ajoute un écouteur d'événements pour détecter les changements dans la zone de texte pour le nom de la fonction
     functionNameInput.addEventListener("input", function() {
-        // Récupére la valeur saisie dans la zone de texte
+        // Récupère la valeur saisie dans la zone de texte
         var functionName = functionNameInput.value;
 
-        // Met à jour le contenu de la cellule avec la nouvelle valeur
+        // Vérifie que les éléments cibles existent
         var derivFun = document.getElementById("deriv-function");
         var lastCellFun = document.getElementById("last-cell-function");
         var beforeLastCellFun = document.getElementById("before-last-cell-function");
-        
-        derivFun.textContent = functionName;
-        lastCellFun.textContent = functionName;
-        beforeLastCellFun.textContent = functionName;
-        adjustInputWidth(functionNameInput);
-});
-} 
+
+        if (derivFun && lastCellFun && beforeLastCellFun) {
+            // Met à jour le contenu de la cellule avec la nouvelle valeur
+            derivFun.textContent = functionName;
+            lastCellFun.textContent = functionName;
+            beforeLastCellFun.textContent = functionName;
+            adjustInputWidth(functionNameInput);
+        } else {
+            //Vérifier que le chanegement du nom de la fonction 
+            //change aussi sur tous les emplacement spécifiés dans le tableau
+            console.error("Erreur d'affichage : Un ou plusieurs éléments de destination pour 'function-name' n'existent pas.");
+        }
+    });
+}
 
 ///////////////////////////////////////////////////////// GESTION DES CELLULES DANS LE TABLEAU ////////////////////////////////////////////////////////////////////////////////////////////
 
-// fonction qui permet d'afficher le menu deroulant (quand la souris est dessus)
-function showDropdown(element) {
-    var dropdownContent = element.querySelector('.dropdown-content');
-    dropdownContent.style.display = "block";
-}
-
-
-// fonction qui permet au menu deroulant de disparaitre (appeler quand la souris n'est plus dessus)
-function hideDropdown(element) {
-    var dropdownContent = element.querySelector('.dropdown-content');
-    dropdownContent.style.display = "none";
-}
-
-
 // fonction qui permet de rentrer une valeur dans le bouton value
+/*
 function changeValue(link) {
     var dropdownContent = link.closest('.dropdown-content'); // Trouve le contenu du menu déroulant
     var button = dropdownContent.parentElement.querySelector('.value'); // Trouve le bouton "value" associé
@@ -175,6 +214,88 @@ function changeValue(link) {
     button.innerHTML = ''; // Efface le contenu du bouton
     button.appendChild(input); // Ajoute l'élément input au bouton
     input.focus(); // Met le focus sur l'input pour que l'utilisateur puisse commencer à saisir immédiatement
+}
+*/
+
+//////////////////////////////
+function changeValue(link) {
+    try {
+        // Trouve le contenu du menu déroulant
+        var dropdownContent = link.closest('.dropdown-content');
+        if (!dropdownContent) {
+            console.error("Le contenu du menu déroulant n'a pas pu être trouvé.");
+            return;
+        }
+
+        // Trouve le bouton "value" associé
+        var button = dropdownContent.parentElement.querySelector('.value');
+        if (!button) {
+            console.error("Le bouton 'value' associé n'a pas pu être trouvé.");
+            return;
+        }
+
+        // Récupère la valeur actuelle
+        var currentValue = button.innerText;
+        if (typeof currentValue !== 'string') {
+            console.error("La valeur actuelle du bouton n'est pas une chaîne de caractères.");
+            return;
+        }
+
+        // Crée un élément input
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = currentValue;
+
+        // Ajoute un gestionnaire d'événements pour détecter lorsque l'utilisateur clique à l'extérieur de la zone de texte
+        input.addEventListener('blur', function() {
+            try {
+                if (this.parentElement) {
+                    updateButtonValue(this.parentElement, this.value);
+                    this.parentElement.removeChild(this);
+                } else {
+                    console.error("Impossible de trouver le parent de l'élément input lors du blur.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la gestion de l'événement blur : " + error.message);
+            }
+        });
+
+        // Ajoute un gestionnaire d'événements pour détecter lorsque la touche "Entrée" est pressée
+        input.addEventListener('keydown', function(event) {
+            try {
+                if (event.key === 'Enter') {
+                    if (this.parentElement) {
+                        updateButtonValue(this.parentElement, this.value);
+                        this.parentElement.removeChild(this);
+                    } else {
+                        console.error("Impossible de trouver le parent de l'élément input lors de la touche Entrée.");
+                    }
+                }
+            } catch (error) {
+                console.error("Erreur lors de la gestion de l'événement keydown : " + error.message);
+            }
+        });
+
+        // Efface le contenu du bouton
+        button.innerHTML = '';
+        button.appendChild(input);
+        input.focus(); // Met le focus sur l'input pour que l'utilisateur puisse commencer à saisir immédiatement
+    } catch (error) {
+        console.error("Erreur générale dans la fonction changeValue : " + error.message);
+    }
+}
+/////////////////////////////
+
+// fonction qui permet d'afficher le menu deroulant (quand la souris est dessus)
+function showDropdown(element) {
+    var dropdownContent = element.querySelector('.dropdown-content');
+    dropdownContent.style.display = "block";
+}
+
+// fonction qui permet au menu deroulant de disparaitre (appeler quand la souris n'est plus dessus)
+function hideDropdown(element) {
+    var dropdownContent = element.querySelector('.dropdown-content');
+    dropdownContent.style.display = "none";
 }
 
 // Fonction pour mettre à jour le texte du bouton avec la nouvelle valeur saisie
@@ -248,6 +369,7 @@ function toggleEmptySymbol() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //fonction qui permet d'ajouter deux colonnes quand on clique sur le plus de la premiere ligne, la premiere colonne correspond a une colonne valeur et la seconde a un ajout
+
 function addColumn(button) {
     var table = document.getElementById("tabvar");
     var colNumber = 2; // Nombre de colonnes à ajouter
@@ -319,6 +441,7 @@ function addColumn(button) {
     }
     toggleEmptySymbol()
 }
+
 
 // fonction qui permet de créer une nouvelle celule
 function createCell(){
