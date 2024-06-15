@@ -8,6 +8,8 @@
 //La fonction sera éditée dans une zone textarea
 // la 1ere ligne de la zone est dédiée à l'entrée de la fonction
 // la 2e ligne de la zone est dédiée à la sortie 
+
+
 const tabvarMethods1 = ["init()", "function_definition()", "validate()", "deriv()", "compare_values()", "simplify()", "develop()", "interval()", "suppose_var()", "is_positive()", "print_env()", "defined()", "suppose()", "proof_assistant()"];
 
 $(document).ready(function() {
@@ -97,7 +99,7 @@ function ExecutApi(command) {
 
         const checkParams = (expectedCount) => {
             if (!params || params.length < expectedCount) {
-                return `Erreur: Paramètres manquants.`;
+                return `1.1, Erreur: Paramètres manquants.`;
             }
             return null;
         };
@@ -115,14 +117,14 @@ function ExecutApi(command) {
                 break;
             case "validate":
                 if (checkParams(2)) {
-                    result1 = checkParams(1);
+                    result1 = checkParams(2);
                 } else {
                     result1 = tabvar.validate(...params);
                 }
                 break;
             case "deriv":
                 if (checkParams(3)) {
-                    result1 = checkParams(1);
+                    result1 = checkParams(3);
                 } else {
                     result1 = tabvar.deriv(...params);
                 }
@@ -136,7 +138,7 @@ function ExecutApi(command) {
                 break;
             case "simplify":
                 if (checkParams(2)) {
-                    result1 = checkParams(1);
+                    result1 = checkParams(2);
                 } else {
                     result1 = tabvar.simplify(...params);
                 }
@@ -198,7 +200,7 @@ function ExecutApi(command) {
                 }
                 break;
             default:
-                result1 = `Erreur: Nom de fonction invalide '${functionName}'.`;
+                result1 = `1.1, Erreur: Nom de fonction invalide '${functionName}'.`;
         }
         insertAtSecondLine(result1);
     } 
@@ -216,12 +218,13 @@ function parseFunctionString(funcStr) {
     return null;
 }
 
+
 //Executer la commande entrée quand on appuie sur la touche Enter
 function onEnter(event) {
     const value = event.target.value.trim(); 
     if (Array.isArray(tabvarMethods1) && tabvarMethods1.includes(value.split('(')[0] + '()')) {
         ExecutApi(value);
     } else {
-        alert("La commande n'existe pas.");
+        insertAtSecondLine("1.1, Erreur : Commande inexistante.");
     }
 }
