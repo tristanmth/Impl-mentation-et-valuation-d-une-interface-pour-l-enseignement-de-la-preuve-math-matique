@@ -1,5 +1,5 @@
 
-
+//Permet les vérifications et les validations du tableau de variation mais aussi l’affichage des validation et des erreurs dû à ce dernier. 
 function checkAll(){
     try{
         clearMessageBox2();
