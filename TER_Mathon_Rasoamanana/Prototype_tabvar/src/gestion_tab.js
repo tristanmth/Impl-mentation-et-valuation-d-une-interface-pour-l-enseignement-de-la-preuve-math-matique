@@ -9,17 +9,16 @@ function adjustInputWidth(input) {
 
 // Fonction qui permet d'afficher les valeur qui se trouvent dans les lignes
 function showValues() {
-
     // Erreur d'accès à l'élément lors de la récupération du tableau.
     var table = document.getElementById("tabvar");
     if (!table) {
-        console.error("Le tableau avec l'ID 'tabvar' n'existe pas.");
+        console.error("[1.6, Le tableau avec l'ID 'tabvar' n'existe pas.]");
         return;
     }
 
     // Erreur d'index. Vérifie si le tableau a au moins 3 lignes
     if (table.rows.length < 3) {
-        console.error("Le tableau doit contenir au moins 3 lignes.");
+        console.error("[1.7, Le tableau doit contenir au moins 3 lignes.]");
         return;
     }
 
@@ -42,6 +41,8 @@ function showValues() {
     for (let i = 1; i < cells1.length; i += 2) {
         if (cells1[i]) {
             values1.push(cells1[i].innerText);
+        } else {
+            console.error("[1.6, Cellule manquante dans la première ligne à l'index " + i + ".]");
         }
     }
 
@@ -66,6 +67,8 @@ function showValues() {
                 default:
                     values2.push(cells2[i].innerText);
             }
+        } else {
+            console.error("[1.6, Cellule manquante dans l'avant-dernière ligne à l'index " + i + ".]");
         }
     }
 
@@ -81,6 +84,8 @@ function showValues() {
                 default:
                     values3.push(cells3[i].innerText);
             }
+        } else {
+            console.error("[1.6, Cellule manquante dans la dernière ligne à l'index " + i + ".]");
         }
     }
 
@@ -92,9 +97,9 @@ function getValues(index) {
     var values = showValues();
     var result;
 
-    //Erreur de validité des valeurs retournée par showValues(). 
+    // Erreur de validité des valeurs retournées par showValues()
     if (!Array.isArray(values) || values.length !== 3) {
-        console.error("Les valeurs retournées par showValues() sont invalides.");
+        console.error("[1.5, Les valeurs retournées par showValues() sont invalides.]");
         return;
     }
 
@@ -109,11 +114,35 @@ function getValues(index) {
             result = values[2];
             break;
         default:
-            //Erreur de paramètres. Si index est invalide.
-            console.error("Erreur paramètres : 1 pour valeurs de x, 2 pour signe de la dérivée, 3 pour variations de la fonction");
+            // Erreur de paramètres. Si index est invalide.
+            console.error("[1.7, Erreur paramètres : 1 pour valeurs de x, 2 pour signe de la dérivée, 3 pour variations de la fonction.]");
             return;
     }
     return result;
+}
+
+//Fonction de sauvegarde des valeurs du tableau (Pour les lignes : 1ère, avant dernière, dernière)
+function saveValuesToJSON() {
+    try {
+        var values = showValues();
+        if (!values) {
+            console.error("[1.9, Erreur interne : Les valeurs retournées par showValues() sont invalides ou non définies]");
+            return;
+        }
+
+        var jsonData = JSON.stringify(values, null, 2);
+
+        var blob = new Blob([jsonData], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'tableValues.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors de la sauvegarde des valeurs en JSON] " + error.message);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,15 +156,13 @@ function changeVarFun() {
     var varNameInput = document.getElementById("var-name");
     var functionNameInput = document.getElementById("function-name");
 
-    // Vérifier l'existence du champs 
-    //d'entrée de nom de fonction et de variable
+    // Vérifier l'existence du champs d'entrée de nom de fonction et de variable
     if (!varNameInput || !functionNameInput) {
-        console.error("Erreur : Les éléments input avec les ID 'var-name' ou 'function-name' n'existent pas.");
+        console.error("[1.6, Erreur : Les éléments input avec les ID 'var-name' ou 'function-name' n'existent pas.]");
         return;
     }
 
-    // Ajoute un écouteur d'événements pour détecter les changements 
-    //dans la zone de texte pour le nom de la variable
+    // Ajoute un écouteur d'événements pour détecter les changements dans la zone de texte pour le nom de la variable
     varNameInput.addEventListener("input", function() {
         // Récupère la valeur saisie dans la zone de texte
         var varName = varNameInput.value;
@@ -154,9 +181,7 @@ function changeVarFun() {
             beforeLastCellVar.textContent = varName;
             adjustInputWidth(varNameInput);
         } else {
-            //Vérifier que le chanegement du nom de la variable 
-            //change aussi sur tous les emplacement spécifiés dans le tableau
-            console.error("Erreur d'affichage : Un ou plusieurs éléments de destination pour 'var-name' n'existent pas.");
+            console.error("[1.6, Erreur d'affichage : Un ou plusieurs éléments de destination pour 'var-name' n'existent pas.]");
         }
     });
 
@@ -177,67 +202,31 @@ function changeVarFun() {
             beforeLastCellFun.textContent = functionName;
             adjustInputWidth(functionNameInput);
         } else {
-            //Vérifier que le chanegement du nom de la fonction 
-            //change aussi sur tous les emplacement spécifiés dans le tableau
-            console.error("Erreur d'affichage : Un ou plusieurs éléments de destination pour 'function-name' n'existent pas.");
+            console.error("[1.6, Erreur d'affichage : Un ou plusieurs éléments de destination pour 'function-name' n'existent pas.]");
         }
     });
 }
 
-///////////////////////////////////////////////////////// GESTION DES CELLULES DANS LE TABLEAU ////////////////////////////////////////////////////////////////////////////////////////////
-
-// fonction qui permet de rentrer une valeur dans le bouton value
-/*
-function changeValue(link) {
-    var dropdownContent = link.closest('.dropdown-content'); // Trouve le contenu du menu déroulant
-    var button = dropdownContent.parentElement.querySelector('.value'); // Trouve le bouton "value" associé
-
-    var currentValue = button.innerText; // Récupére la valeur actuelle
-    var input = document.createElement('input'); // Cré un élément input
-    input.type = 'text'; // Défini le type de l'input
-    input.value = currentValue; // Pré-rempli l'input avec la valeur actuelle
-    
-    // Ajoute un gestionnaire d'événements pour détecter lorsque l'utilisateur clique à l'extérieur de la zone de texte
-    input.addEventListener('blur', function() {
-        updateButtonValue(this.parentElement, this.value); // Mett à jour le texte du bouton avec la nouvelle valeur saisie
-        this.parentElement.removeChild(this); // Supprime l'élément input une fois que l'utilisateur a terminé de saisir la nouvelle valeur
-    });
-
-    // Ajoute un gestionnaire d'événements pour détecter lorsque la touche "Entrée" est pressée
-    input.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            updateButtonValue(this.parentElement, this.value); // Met à jour le texte du bouton avec la nouvelle valeur saisie
-            this.parentElement.removeChild(this); // Supprime l'élément input une fois que l'utilisateur a appuyé sur "Entrée"
-        }
-    });
-    
-    button.innerHTML = ''; // Efface le contenu du bouton
-    button.appendChild(input); // Ajoute l'élément input au bouton
-    input.focus(); // Met le focus sur l'input pour que l'utilisateur puisse commencer à saisir immédiatement
-}
-*/
-
-//////////////////////////////
 function changeValue(link) {
     try {
         // Trouve le contenu du menu déroulant
         var dropdownContent = link.closest('.dropdown-content');
         if (!dropdownContent) {
-            console.error("Le contenu du menu déroulant n'a pas pu être trouvé.");
+            console.error("[1.6, Le contenu du menu déroulant n'a pas pu être trouvé.]");
             return;
         }
 
         // Trouve le bouton "value" associé
         var button = dropdownContent.parentElement.querySelector('.value');
         if (!button) {
-            console.error("Le bouton 'value' associé n'a pas pu être trouvé.");
+            console.error("[1.6, Le bouton 'value' associé n'a pas pu être trouvé.]");
             return;
         }
 
         // Récupère la valeur actuelle
         var currentValue = button.innerText;
         if (typeof currentValue !== 'string') {
-            console.error("La valeur actuelle du bouton n'est pas une chaîne de caractères.");
+            console.error("[1.2, La valeur actuelle du bouton n'est pas une chaîne de caractères.]");
             return;
         }
 
@@ -253,10 +242,10 @@ function changeValue(link) {
                     updateButtonValue(this.parentElement, this.value);
                     this.parentElement.removeChild(this);
                 } else {
-                    console.error("Impossible de trouver le parent de l'élément input lors du blur.");
+                    console.error("[1.6, Impossible de trouver le parent de l'élément input lors du blur.]");
                 }
             } catch (error) {
-                console.error("Erreur lors de la gestion de l'événement blur : " + error.message);
+                console.error("[1.9, Erreur lors de la gestion de l'événement blur : " + error.message + "]");
             }
         });
 
@@ -268,11 +257,11 @@ function changeValue(link) {
                         updateButtonValue(this.parentElement, this.value);
                         this.parentElement.removeChild(this);
                     } else {
-                        console.error("Impossible de trouver le parent de l'élément input lors de la touche Entrée.");
+                        console.error("[1.6, Impossible de trouver le parent de l'élément input lors de la touche Entrée.]");
                     }
                 }
             } catch (error) {
-                console.error("Erreur lors de la gestion de l'événement keydown : " + error.message);
+                console.error("[1.9, Erreur lors de la gestion de l'événement keydown : " + error.message + "]");
             }
         });
 
@@ -281,86 +270,139 @@ function changeValue(link) {
         button.appendChild(input);
         input.focus(); // Met le focus sur l'input pour que l'utilisateur puisse commencer à saisir immédiatement
     } catch (error) {
-        console.error("Erreur générale dans la fonction changeValue : " + error.message);
+        console.error("[1.9, Erreur générale dans la fonction changeValue : " + error.message + "]");
     }
 }
-/////////////////////////////
 
 // fonction qui permet d'afficher le menu deroulant (quand la souris est dessus)
 function showDropdown(element) {
-    var dropdownContent = element.querySelector('.dropdown-content');
-    dropdownContent.style.display = "block";
+    try {
+        var dropdownContent = element.querySelector('.dropdown-content');
+        if (!dropdownContent) {
+            console.error("[1.9, Erreur interne : Le contenu du menu déroulant n'a pas été trouvé]");
+            return;
+        }
+        dropdownContent.style.display = "block";
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors de l'affichage du menu déroulant] " + error.message);
+    }
 }
+
 
 // fonction qui permet au menu deroulant de disparaitre (appeler quand la souris n'est plus dessus)
 function hideDropdown(element) {
-    var dropdownContent = element.querySelector('.dropdown-content');
-    dropdownContent.style.display = "none";
+    try {
+        var dropdownContent = element.querySelector('.dropdown-content');
+        if (!dropdownContent) {
+            console.error("[1.9, Erreur interne : Le contenu du menu déroulant n'a pas été trouvé]");
+            return;
+        }
+        dropdownContent.style.display = "none";
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors de la disparition du menu déroulant] " + error.message);
+    }
 }
 
 // Fonction pour mettre à jour le texte du bouton avec la nouvelle valeur saisie
 function updateButtonValue(button, newValue) {
-    button.innerText = newValue;
+    try {
+        button.innerText = newValue;
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors de la mise à jour de la valeur du bouton] " + error.message);
+    }
 }
 
 // fonction qui permet d'afficher l'identiter du bouton MoreLess
 function toggleMore(link, value) {
-    var moreButton = link.closest('.dropdown').querySelector('.moreLess');
-    moreButton.innerText = value;
+    try {
+        var moreButton = link.closest('.dropdown').querySelector('.moreLess');
+        if (!moreButton) {
+            console.error("[1.9, Erreur interne : Le bouton 'MoreLess' n'a pas été trouvé]");
+            return;
+        }
+        moreButton.innerText = value;
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors du basculement du bouton 'MoreLess'] " + error.message);
+    }
 }
 
 // fonction qui permet d'afficher l'identiter du bouton Increase
 function toggleIncrease(link, value) {
-    var moreButton = link.closest('.dropdown').querySelector('.increase');
-    moreButton.innerText = value;
+    try {
+        var increaseButton = link.closest('.dropdown').querySelector('.increase');
+        if (!increaseButton) {
+            console.error("[1.9, Erreur interne : Le bouton 'Increase' n'a pas été trouvé]");
+            return;
+        }
+        increaseButton.innerText = value;
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors du basculement du bouton 'Increase'] " + error.message);
+    }
 }
 
 // fonction qui permet d'afficher l'identiter du bouton VI
 function toggleVI(link, value) {
-    var moreButton = link.closest('.dropdown').querySelector('.VI');
-    moreButton.innerText = value;
+    try {
+        var viButton = link.closest('.dropdown').querySelector('.VI');
+        if (!viButton) {
+            console.error("[1.9, Erreur interne : Le bouton 'VI' n'a pas été trouvé]");
+            return;
+        }
+        viButton.innerText = value;
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors du basculement du bouton 'VI'] " + error.message);
+    }
 }
 
 // fonction qui permet de ne pas afficher "vide" dans l'avant derniere ligne du tableau
 function toggleEmptySymbol() {
-    var table = document.getElementById("tabvar");
+    try {
+        var table = document.getElementById("tabvar");
 
-    // Boucle à partir de la deuxième ligne jusqu'à l'avant-dernière ligne
-    for (var j = 1; j < table.rows.length - 2; j++) {
-        var cells = table.rows[j].cells;
+        if (!table) {
+            console.error("[1.6, Le tableau avec l'ID 'tabvar' n'existe pas]");
+            return;
+        }
 
-        // Boucle à partir de la quatrième cellule (index 3) avec un pas de 2
-        for (var i = 3; i < cells.length; i += 2) {
-            // Sélectionne l'élément contenant le menu déroulant
-            var dropdownContent = cells[i].querySelector('.dropdown-content');
+        // Boucle à partir de la deuxième ligne jusqu'à l'avant-dernière ligne
+        for (var j = 1; j < table.rows.length - 1; j++) {
+            var cells = table.rows[j].cells;
 
-            if (dropdownContent) {
-                // Sélectionne le bouton ou l'élément contenant le symbole "∅"
-                var emptyButton = dropdownContent.querySelector('a[value="∅"]');
+            // Boucle à partir de la quatrième cellule (index 3) avec un pas de 2
+            for (var i = 3; i < cells.length; i += 2) {
+                // Sélectionne l'élément contenant le menu déroulant
+                var dropdownContent = cells[i].querySelector('.dropdown-content');
 
-                if (emptyButton) {
-                    // Affiche le bouton contenant le symbole "∅"
-                    emptyButton.style.display = "block";
+                if (dropdownContent) {
+                    // Sélectionne le bouton ou l'élément contenant le symbole "∅"
+                    var emptyButton = dropdownContent.querySelector('a[value="∅"]');
+
+                    if (emptyButton) {
+                        // Affiche le bouton contenant le symbole "∅"
+                        emptyButton.style.display = "block";
+                    }
                 }
             }
         }
-    }
 
-    // Boucle spécifique pour masquer le bouton dans l'avant-dernière ligne
-    var secondLastRow = table.rows[table.rows.length - 2];
-    var cells = secondLastRow.cells;
+        // Masque le bouton dans l'avant-dernière ligne (ligne des valeurs inconsistées)
+        var lastRow = table.rows[table.rows.length - 1];
+        var cellsLastRow = lastRow.cells;
 
-    for (var i = 3; i < cells.length; i += 2) {
-        var dropdownContent = cells[i].querySelector('.dropdown-content');
+        for (var i = 3; i < cellsLastRow.length; i += 2) {
+            var dropdownContent = cellsLastRow[i].querySelector('.dropdown-content');
 
-        if (dropdownContent) {
-            var emptyButton = dropdownContent.querySelector('a[value="∅"]');
+            if (dropdownContent) {
+                var emptyButton = dropdownContent.querySelector('a[value="∅"]');
 
-            if (emptyButton) {
-                // Masque le bouton contenant le symbole "∅"
-                emptyButton.style.display = "none";
+                if (emptyButton) {
+                    // Masque le bouton contenant le symbole "∅"
+                    emptyButton.style.display = "none";
+                }
             }
         }
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors du basculement du symbole vide] " + error.message);
     }
 }
 
@@ -369,9 +411,13 @@ function toggleEmptySymbol() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //fonction qui permet d'ajouter deux colonnes quand on clique sur le plus de la premiere ligne, la premiere colonne correspond a une colonne valeur et la seconde a un ajout
-
 function addColumn(button) {
     var table = document.getElementById("tabvar");
+    if (!table) {
+        console.error("[1.6, Le tableau avec l'ID 'tabvar' n'existe pas.]");
+        return;
+    }
+
     var colNumber = 2; // Nombre de colonnes à ajouter
     var buttonCellIndex = button.parentNode.cellIndex;
 
@@ -382,21 +428,21 @@ function addColumn(button) {
         for (var i = 0; i < colNumber; i++) {
             var newCell = createCell();
 
-            if (rowIndex === 0 ) {
-                // Première ligne ou dernière ligne
+            if (rowIndex === 0) {
+                // Première ligne
                 if (i == 0) {
                     var dropdownCell1 = createDropdownCell("div", "0", "value", function() { changeValue(this); }, `
-                    <a href="#" onclick="changeValue(this)">Changer</a>
-                    <a href="#" onclick="deleteColumns(this)">Supprimer</a>
+                        <a href="#" onclick="changeValue(this)">Changer</a>
+                        <a href="#" onclick="deleteColumns(this)">Supprimer</a>
                     `);
-                    newCell.appendChild(dropdownCell1); // Ajout la cellule contenant le menu déroulant à la première nouvelle colonne
+                    newCell.appendChild(dropdownCell1); // Ajout de la cellule contenant le menu déroulant à la première nouvelle colonne
                 } else {
                     var clonedButton = button.cloneNode(true);
                     newCell.appendChild(clonedButton);
                 }
-            } 
-            else if (rowIndex === table.rows.length - 1) {
-                if(i==1){
+            } else if (rowIndex === table.rows.length - 1) {
+                // Dernière ligne
+                if (i == 1) {
                     var dropdownCell = createDropdownCell("button",
                         "\u2197 \u2198",
                         "increase",
@@ -408,8 +454,7 @@ function addColumn(button) {
                     );
                     newCell.appendChild(dropdownCell);
                 }
-            }
-            else {
+            } else {
                 // Toutes les autres lignes sauf la première et la dernière
                 if (i == 0) {
                     var dropdownCell = createDropdownCell("button",
@@ -439,9 +484,8 @@ function addColumn(button) {
             row.insertBefore(newCell, row.cells[buttonCellIndex + 1 + i]);
         }
     }
-    toggleEmptySymbol()
+    toggleEmptySymbol();
 }
-
 
 // fonction qui permet de créer une nouvelle celule
 function createCell(){
@@ -450,7 +494,8 @@ function createCell(){
     return cell
 }
 
-// fonction qui est appeler dans la fonction adColumn afin de créer les nouveau élément et leur type
+// fonction qui est appeler dans la fonction addColumn afin de créer les nouveau élément et leur type
+
 function createDropdownCell(buttonOrDiv, buttonText, buttonClass, buttonOnClick, contentHTML) {
     var dropdownCell = document.createElement("div");
     dropdownCell.className = "dropdown";
@@ -473,12 +518,15 @@ function createDropdownCell(buttonOrDiv, buttonText, buttonClass, buttonOnClick,
     dropdownContent.className = "dropdown-content";
     dropdownContent.innerHTML = contentHTML;
 
-    if(buttonOrDiv=="button"){
+    if (buttonOrDiv === "button") {
         dropdownCell.appendChild(dropdownButton);
         dropdownCell.appendChild(dropdownContent);
-    } else {
+    } else if (buttonOrDiv === "div") {
         dropdownCell.appendChild(dropdownDiv);
         dropdownCell.appendChild(dropdownContent);
+    } else {
+        console.error("[1.6, Type de bouton incorrect dans createDropdownCell]");
+        return null;
     }
 
     return dropdownCell;
@@ -486,25 +534,35 @@ function createDropdownCell(buttonOrDiv, buttonText, buttonClass, buttonOnClick,
 
 // fonction qui permet de supprimer la colonne choisit et celle de droite
 function deleteColumns(link) {
-    // Sélectionne la cellule contenant le lien cliqué
-    var buttonCell = link.closest('td');
-    var buttonCellIndex = buttonCell.cellIndex;
-    var table = document.getElementById("tabvar");
-
-    // Supprime les cellules à droite immédiates si elles existent
-    for (var i = 0; i < table.rows.length; i++) {
-        if (table.rows[i].cells[buttonCellIndex]) {
-            table.rows[i].cells[buttonCellIndex].remove();
+    try {
+        // Sélectionne la cellule contenant le lien cliqué
+        var buttonCell = link.closest('td');
+        if (!buttonCell) {
+            console.error("[1.6, Cellule contenant le lien cliqué n'a pas été trouvée]");
+            return;
         }
-    }
 
-    // Supprime les cellules à droite suivantes (qui deviennent les nouvelles cellules immédiatement à droite) si elles existent
-    for (var i = 0; i < table.rows.length; i++) {
-        if (table.rows[i].cells[buttonCellIndex]) {
-            table.rows[i].cells[buttonCellIndex].remove();
+        var buttonCellIndex = buttonCell.cellIndex;
+        var table = document.getElementById("tabvar");
+
+        // Supprime les cellules à droite immédiates si elles existent
+        for (var i = 0; i < table.rows.length; i++) {
+            if (table.rows[i].cells[buttonCellIndex]) {
+                table.rows[i].deleteCell(buttonCellIndex);
+            }
         }
+
+        // Supprime les cellules à droite suivantes (qui deviennent les nouvelles cellules immédiatement à droite) si elles existent
+        for (var i = 0; i < table.rows.length; i++) {
+            if (table.rows[i].cells[buttonCellIndex]) {
+                table.rows[i].deleteCell(buttonCellIndex);
+            }
+        }
+    } catch (error) {
+        console.error("[1.9, Erreur interne lors de la suppression des colonnes] " + error.message);
     }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////// GESTION DES LIGNES //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -513,10 +571,20 @@ function deleteColumns(link) {
 // Fonction pour ajouter une nouvelle ligne avec des placeholders différents
 function addExtraRow() {
     var table = document.getElementById("tabvar");
+    if (!table) {
+        console.error("[1.6, Le tableau avec l'ID 'tabvar' n'existe pas.]");
+        return;
+    }
+
     var secondRow = table.rows[1];
+    if (!secondRow) {
+        console.error("[1.6, La deuxième ligne du tableau n'existe pas.]");
+        return;
+    }
+
     var newRow = table.insertRow(1); // Insérer à la deuxième ligne
 
-    // Cré une nouvelle ligne avec des placeholders différents pour chaque nouvelle ligne
+    // Crée une nouvelle ligne avec des placeholders différents pour chaque nouvelle ligne
     var placeholders = ['k(x)', 'l(x)', 'g(x)', 'h(x)', 'i(x)', 'j(x)']; // Liste des placeholders
     var placeholderIndex = (table.rows.length - 2) % placeholders.length; // Sélectionne le placeholder en fonction du nombre de lignes actuelles
     for (var i = 0; i < secondRow.cells.length; i++) {
@@ -524,7 +592,7 @@ function addExtraRow() {
 
         // Attribue le placeholder approprié à la première cellule de la nouvelle ligne
         if (i === 0) {
-            var dropdownCell = createDropdownCell("div", ""+placeholders[placeholderIndex] , 'value' , function() { changeValue(this); }, `
+            var dropdownCell = createDropdownCell("div", "" + placeholders[placeholderIndex], 'value', function() { changeValue(this); }, `
                         <a href="#" onclick="changeValue(this)">Changer</a>
                         <a href="#" onclick="deleteRow(this)">Supprimer</a>
                     `);
@@ -567,6 +635,11 @@ function addExtraRow() {
     var newFunctionDiv = document.createElement('div');
     newFunctionDiv.classList.add('enter_function');
 
+    // Créer un nouvel élément input pour le nom de la fonction
+    var newInput = document.createElement('input'); // Déclaration de newInput
+    newInput.type = 'text';
+    newInput.placeholder = placeholders[placeholderIndex];
+
     // Ajuster la taille initiale de l'input et ajouter un écouteur d'événements
     newInput.style.width = ((newInput.placeholder.length + 1) * 8) + 'px';
     newInput.addEventListener('input', function() { adjustInputWidth(newInput); });
@@ -589,14 +662,20 @@ function addExtraRow() {
     toggleEmptySymbol();
 }
 
+
 // supprime les lignes supplementaire
 function removeMiddleRows() {  
     var table = document.getElementById("tabvar");
+    if (!table) {
+        console.error("[1.6, Le tableau avec l'ID 'tabvar' n'existe pas.]");
+        return;
+    }
+
     var rowCount = table.rows.length;
 
     // Vérifie si le tableau contient au moins trois lignes
     if (rowCount < 3) {
-        console.log("Le tableau doit avoir au moins trois lignes pour effectuer cette opération.");
+        console.error("[1.7, Le tableau doit avoir au moins trois lignes pour effectuer cette opération.]");
         return;
     }
 
@@ -608,5 +687,9 @@ function removeMiddleRows() {
 
 function deleteRow(link) {
     var row = link.closest('tr');
+    if (!row) {
+        console.error("[1.6, Impossible de trouver la ligne parente (tr) du lien fourni.]");
+        return;
+    }
     row.remove();
-} 
+}

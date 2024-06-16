@@ -9,7 +9,6 @@
 // la 1ere ligne de la zone est dédiée à l'entrée de la fonction
 // la 2e ligne de la zone est dédiée à la sortie 
 
-
 const tabvarMethods1 = ["init()", "function_definition()", "validate()", "deriv()", "compare_values()", "simplify()", "develop()", "interval()", "suppose_var()", "is_positive()", "print_env()", "defined()", "suppose()", "proof_assistant()"];
 
 $(document).ready(function() {
@@ -82,6 +81,9 @@ function insertAtSecondLine(text) {
 
     const cursorPos = lines.slice(0, 2).join('\n').length;
     textarea[0].selectionStart = textarea[0].selectionEnd = cursorPos;
+
+    // Affiche une erreur lors de l'insertion du texte à la deuxième ligne
+    console.error("1.9, Erreur: Impossible d'insérer le texte à la deuxième ligne.");
 }
 
 // Fonction  qui permet d'executer les fonctions (commandes) éditées dans la zone de texte.
@@ -99,7 +101,7 @@ function ExecutApi(command) {
 
         const checkParams = (expectedCount) => {
             if (!params || params.length < expectedCount) {
-                return `1.1, Erreur: Paramètres manquants.`;
+                return `[1.1, Erreur: Paramètres manquants.]`;
             }
             return null;
         };
@@ -200,7 +202,7 @@ function ExecutApi(command) {
                 }
                 break;
             default:
-                result1 = `1.1, Erreur: Nom de fonction invalide '${functionName}'.`;
+                result1 = `[1.1, Erreur: Nom de fonction invalide '${functionName}']`;
         }
         insertAtSecondLine(result1);
     } 
@@ -208,23 +210,36 @@ function ExecutApi(command) {
 
 //Permet de créer un nom de fonction et ses paramètres
 function parseFunctionString(funcStr) {
-    const funcPattern = /^(\w+)\((.*)\)$/;
-    const match = funcPattern.exec(funcStr);
-    if (match) {
-        const functionName = match[1];
-        const params = match[2].split(',').map(param => param.trim());
-        return { functionName, params };
+    try {
+        const funcPattern = /^(\w+)\((.*)\)$/;
+        const match = funcPattern.exec(funcStr);
+        if (match) {
+            const functionName = match[1];
+            const params = match[2].split(',').map(param => param.trim());
+            return { functionName, params };
+        } else {
+            // Erreur de syntaxe : format de fonction invalide
+            throw "[1.1, Erreur : Format de fonction invalide]";
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
     }
-    return null;
 }
-
 
 //Executer la commande entrée quand on appuie sur la touche Enter
 function onEnter(event) {
-    const value = event.target.value.trim(); 
-    if (Array.isArray(tabvarMethods1) && tabvarMethods1.includes(value.split('(')[0] + '()')) {
-        ExecutApi(value);
-    } else {
-        insertAtSecondLine("1.1, Erreur : Commande inexistante.");
+    try {
+        const value = event.target.value.trim(); 
+
+        // Vérifier si tabvarMethods1 est un tableau et si la valeur est une commande valide
+        if (Array.isArray(tabvarMethods1) && tabvarMethods1.includes(value.split('(')[0] + '()')) {
+            ExecutApi(value);
+        } else {
+            throw "[1.1, Erreur : Commande inexistante]";
+        }
+    } catch (error) {
+        console.error(error);
+        insertAtSecondLine(error);
     }
 }
