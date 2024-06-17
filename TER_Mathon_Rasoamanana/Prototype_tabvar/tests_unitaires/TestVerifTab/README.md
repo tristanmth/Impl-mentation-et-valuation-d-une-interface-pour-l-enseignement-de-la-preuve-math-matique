@@ -1,36 +1,33 @@
-# Tests Unitaires
+# COMMANDE DEPUIS LA ZONE TEXTUELLE
 
-Ce document présente les tests unitaires pour différentes fonctionnalités du logiciel. 
+## Création d’une fonction pour exécution
 
-## Comparer_Valeurs_Ligne
+- **Identification**: 
+  - **Fonction**: `parseFunctionString()`
+  - **Utilisation dans le programme**: Entrée d’une commande dans la zone textuelle.
+  - **Utilisation dans le module de gestion interne**: Module de gestion de la manipulation de la gestion de la zone textuelle (voir documentation interne).
 
-- **Identification**: Test de comparaison d'expressions deux à deux. 
-- **Description**: Vérifie que les valeurs d'une ligne sont comparées deux à deux.
-- **Contraintes**: La vérification d'autres valeurs nécessite des modifications dans le fichier .html. Nécessite l'ouverture de la console web. 
-- **Dépendances**: Importation du module tabvar. Utilisation des fonctions du module tabvar.  
-- **Procédure de Test**:
-  1. Ouvrir le .html du dossier 'Comparer_Valeur_Ligne' 
-  2. Ouvrir la console du navigateur pour voir les retours possibles.
-  3. Modier les données dans le fichier .html pour vérifier d'autres retours.  
+- **Description**: Vérifier si le nom d'une fonction avec ses paramètres matche. Si on entre une chaîne de caractères dans une zone de texte, on veut qu'elle soit considérée comme une fonction.
 
-## Vérification_Derivee
+- **Contraintes**: Nécessite une fonction de récupération des données saisies dans le champ de texte dédié. Dans le programme, nous utilisons une fonction d’autocomplétion via une bibliothèque externe JQuery.
 
-- **Identification**: Test de vérification si la dérivée d'une fonction est bonne.
-- **Description**: Vérifie que les données utilisateur sont correctement chargées depuis la base de données.
-- **Contraintes**: Certaines dérivée ne peuvent pas être vérifiée si trop compliquée. Nécessite l'ouverture de la console web.  
-- **Dépendances**: Importation du module tabvar.
-- **Procédure de Test**:
-  1. Ouvrir le .html du dossier 'Vérification_Derivee' 
-  2. Ouvrir la console du navigateur pour voir les retours possibles.
+- **Dépendances**: 
+  - Importation d’une bibliothèque externe dans le programme final.
 
-## Validation_Fonction_Principale
+- **A vérifier avec la console du navigateur**
 
-- **Identification**: Test de validation de la fonction principale. 
-- **Description**: Vérifie si la fonction à traiter est correctement définie. 
-- **Contraintes**: Nécessite l'ouverture de la console web. 
-- **Dépendances**: Importation du module tabvar. Utilisation des fonctions du module tabvar.
-- **Procédure de Test**:
-  1. Ouvrir le .html du dossier 'Validation_Fonction_Principale' 
-  2. Ouvrir la console du navigateur pour voir les retours possibles.
+## Exécution d’une fonction dans le module tabvar depuis une entrée textuelle
 
----
+- **Identification**: 
+  - **Fonction**: `parseFunctionString()`
+  - **Utilisation dans le programme**: Exécution de la commande saisie dans la zone textuelle.
+  - **Utilisation dans le module de gestion interne**: Module de gestion de la manipulation de la gestion de la zone textuelle (voir documentation interne).
+
+- **Description**: On souhaite que si la fonction saisie est une fonction du module tabvar avec les bons paramètres, alors elle soit exécutée.
+
+- **Contraintes**: Importation du module tabvar. Utilisation des fonctions du module tabvar. Doit utiliser la fonction de création de nom de fonction `parseFunctionStr()`.
+
+- **Dépendances**: 
+  - Importation du module tabvar. Utilisation des fonctions du module tabvar (celles dont on connaît le fonctionnement).
+
+- **A vérifier avec la console du navigateur**
