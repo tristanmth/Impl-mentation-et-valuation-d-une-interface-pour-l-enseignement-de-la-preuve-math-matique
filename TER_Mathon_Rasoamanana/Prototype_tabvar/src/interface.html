@@ -148,12 +148,14 @@
             <button class="top-right-button" onclick="checkAll()">?</button>
         
             <button onclick="compareValuesInRow()">comparer les valeurs de x</button>
-            <button onclick="clearMessageBox2(); validation_funMain()">valider main function</button>
-            <button onclick="clearMessageBox2();validation_funDeriv()">valider deriv function</button>
+            <button onclick="clearMessageBox2();validation_funMain()">valider main function</button>
+            <button onclick="clearMessageBox2();env = 0 ; var name_var_tabvar = document.getElementById('deriv-var').textContent  ; 
+            var function_main = document.getElementById('function-expr').value ; var supp_var = tabvar.suppose_var(env, name_var_tabvar);
+            env = supp_var[1];validation_funDeriv(env)">valider deriv function</button>
             <button onclick="clearMessageBox2();env = 0 ; var name_var_tabvar = document.getElementById('deriv-var').textContent  ; 
             var function_main = document.getElementById('function-expr').value ; var supp_var = tabvar.suppose_var(env, name_var_tabvar);
             env = supp_var[1];verification_funDeriv(env)">verifier deriv function</button>
-            <button onclick="clearMessageBox2();validation_subFun()">Les sous fonctions</button>
+            <button onclick="clearMessageBox2();validation_subFun(env)">Les sous fonctions</button>
         
             <span id="comparison_result"></span>
             <div id="messageBox2Area" class="error-message"></div>
