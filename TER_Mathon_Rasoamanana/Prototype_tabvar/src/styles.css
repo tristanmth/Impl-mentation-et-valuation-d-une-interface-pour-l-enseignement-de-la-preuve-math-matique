@@ -43,8 +43,8 @@ html, body {
 }
 
 .box3 {
-    border: 2px solid black; /* Bordure sur la boîte externe */
-    padding: 10px; /* Espacement interne */
+    border: 2px solid black; 
+    padding: 10px; 
 }
 
 table {
@@ -76,15 +76,15 @@ input[type="text"] {
 }
 
 .box3 textarea {
-    width: calc(100% - 24px); /* Largeur pour compenser la taille de la bordure */
-    height: 100%; /* Hauteur pour remplir la boîte externe */
-    resize: none; /* Désactive le redimensionnement */
-    box-sizing: border-box; /* Inclut la bordure dans la taille totale */
-    border: none; /* Supprime la bordure de la zone de texte */
-    outline: none; /* Supprime la bordure bleue lors du focus */
-    margin: 0; /* Supprime les marges */
-    padding: 0; /* Supprime le rembourrage */
-    font-size: 30px; /* Agrandit la taille du texte */
+    width: calc(100% - 24px); 
+    height: 100%;
+    resize: none; 
+    box-sizing: border-box; 
+    border: none; 
+    outline: none;
+    margin: 0; 
+    padding: 0;
+    font-size: 30px;
 }
 
 .box4 {
@@ -101,13 +101,13 @@ input[type="text"] {
     position: absolute;
     top: 0;
     right: 0;
-    font-size: 20px; /* Taille du texte */
-    background-color: red; /* Couleur de fond */
-    color: white; /* Couleur du texte */
-    padding: 10px; /* Espace intérieur */
-    border: none; /* Pas de bordure */
-    cursor: pointer; /* Curseur */
-    border-radius: 30%; /* Ajouter des coins arrondis */
+    font-size: 20px; 
+    background-color: red; 
+    color: white; 
+    padding: 10px; 
+    border: none; 
+    cursor: pointer; 
+    border-radius: 30%; 
 }
 
 /* STYLE GENERAL DU TABLEAU */
@@ -116,7 +116,7 @@ table {
     width: 80%;
     height: 10%;
     border-collapse: collapse;
-    position: relative; /* Ajoute le positionnement relatif */
+    position: relative; 
 }
 
 td {
@@ -140,7 +140,7 @@ td {
 
 /* Styles pour les colonnes supplémentaires */
 .additional-column {
-    width: 100px; /* Fixer la largeur de la cellule */
+    width: 100px; 
     text-align: center;
     border: 2px solid rgb(0, 0, 0);
     border-left: none;
@@ -160,105 +160,106 @@ td.editable-cell.first-cell {
 
 .add-value {
     
-    background-color: #f0f0f0; /* Changer la couleur de fond */
-    color: #000000; /* Changer la couleur du texte */
-    border-radius: 50%; /* Ajouter des coins arrondis */
-    padding: 5px 10px; /* Ajouter des marges internes */
-    font-size: 20px; /* Changer la taille de la police */
-    cursor: pointer; /* Changer le curseur au survol */
+    background-color: #f0f0f0;
+    color: #000000;
+    border-radius: 50%; 
+    padding: 5px 10px; 
+    font-size: 20px; 
+    cursor: pointer; 
 }
 
 .add-line {
     
-    background-color: #f0f0f0; /* Changer la couleur de fond */
-    color: #000000; /* Changer la couleur du texte */
-    border-radius: 50%; /* Ajouter des coins arrondis */
-    padding: 5px 10px; /* Ajouter des marges internes */
-    font-size: 20px; /* Changer la taille de la police */
-    cursor: pointer; /* Changer le curseur au survol */
+    background-color: #f0f0f0; 
+    color: #000000; 
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 20px; 
+    cursor: pointer; 
 }
 
 /* le bouton d'ajout de colonnes */
 button.add-value[disabled] {
-    background-color: #ccc; /* Couleur de fond grise */
-    opacity: 0.5; /* Opacité réduite */
-    cursor: not-allowed; /* Curseur non autorisé */
+    background-color: #ccc; 
+    opacity: 0.5; 
+    cursor: not-allowed; 
 }
 
 .add-value:hover {
-    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
-    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+    background-color: #e0e0e0; 
+    border-color: #aaa; 
 }
 .add-value:active {
-    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
-    border-color: #999; /* Changer la couleur de la bordure lors du clic */
+    background-color: #d0d0d0;
+    border-color: #999; 
 }
 
 /* BOUTON POSITIF/NEGATIF */ 
 
 /* Cibler les boutons avec la classe 'moreLess' */
 button.moreLess {
-    background-color: #f0f0f0; /* Changer la couleur de fond */
-    color: #000000; /* Changer la couleur du texte */
-    border-radius: 5px; /* Ajouter des coins arrondis */
-    padding: 5px 10px; /* Ajouter des marges internes */
-    font-size: 20px; /* Changer la taille de la police */
-    cursor: pointer; /* Changer le curseur au survol */
+    background-color: #f0f0f0;
+    color: #000000; 
+    border-radius: 5px; 
+    padding: 5px 10px; 
+    font-size: 20px; 
+    cursor: pointer; 
 }
 button.moreLess:hover {
-    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
-    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+    background-color: #e0e0e0;
+    border-color: #aaa; 
 }
 button.moreLess:active {
-    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
-    border-color: #999; /* Changer la couleur de la bordure lors du clic */
+    background-color: #d0d0d0; 
+    border-color: #999; 
 }
 
 /* BOUTON AVEC VI, 0 ET VIDE */
 
 /* Cibler les boutons avec la classe 'VI' */
 button.VI {
-    background-color: #55a775; /* Changer la couleur de fond */
-    color: #000000; /* Changer la couleur du texte */
-    border-radius: 5px; /* Ajouter des coins arrondis */
-    padding: 5px 10px; /* Ajouter des marges internes */
-    font-size: 20px; /* Changer la taille de la police */
-    cursor: pointer; /* Changer le curseur au survol */
+    background-color: #55a775;
+    color: #000000; 
+    border-radius: 5px; 
+    padding: 5px 10px; 
+    font-size: 20px; 
+    cursor: pointer; 
 }
 /* Ajouter un effet au survol */
 button.VI:hover {
-    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
-    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+    background-color: #e0e0e0;
+    border-color: #aaa; 
 }
 /* Ajouter un effet lorsqu'on clique */
 button.VI:active {
-    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
-    border-color: #b8b8b8; /* Changer la couleur de la bordure lors du clic */
+    background-color: #d0d0d0;
+    border-color: #b8b8b8; 
 }
 
 /* BOUTON AVEC LES FLECHES */ 
 
 /* Cibler les boutons avec la classe 'increase' */
-button.increase {
-    width: 100%; /* Pour remplir toute la largeur de la cellule */
-    height: 100%; /* Pour remplir toute la hauteur de la cellule */
-    font-size: 3em; /* Ajustez la taille de la police selon vos besoins */
-    line-height: 1; /* Pour aligner verticalement le contenu au centre */
-    display: flex; /* Pour utiliser la disposition flexbox */
-    justify-content: center; /* Pour aligner horizontalement le contenu au centre */
-    align-items: center; /* Pour aligner verticalement le contenu au centre */
-    background-color: transparent; /* Pour supprimer la couleur de fond */
-    border: none; /* Pour supprimer la bordure */
+button.increase {   
+    padding: 5px 10px; 
+    font-size: 3em; 
+    margin-top: 5px;
+    line-height: 1; 
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    background-color: transparent;
+    cursor: pointer; 
+
 }
 /* Ajouter un effet au survol */
 button.increase:hover {
-    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
-    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+    background-color: #e0e0e0;
+    border-color: #a5a5a5; 
 }
 /* Ajouter un effet lorsqu'on clique */
 button.increase:active {
-    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
-    border-color: #999; /* Changer la couleur de la bordure lors du clic */
+    background-color: #d0d0d0; 
+    border-color: #999; 
 }
 
 /* MENU DEROULANT */
