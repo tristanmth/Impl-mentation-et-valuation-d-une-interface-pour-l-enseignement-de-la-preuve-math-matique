@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto-completion</title>
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+    <input id="command-textarea" placeholder="zone textuelle"></input>
+    <div class="box4"></div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const tabvarMethods = ["init()", "function_definition()", "validate()", "deriv()", "compare_values()", "simplify()", "develop()", "interval()", "suppose_var()", "is_positive()", "print_env()", "defined()", "suppose()", "proof_assistant()"];
+
+            $("#command-textarea").on('input', function() {
+                const cursorPos = this.selectionStart;
+                const textBeforeCursor = this.value.substring(0, cursorPos);
+                const tabvarPattern = /$/;
+
+                if (tabvarPattern.test(textBeforeCursor)) {
+                    $(this).autocomplete({
+                        source: tabvarMethods,
+                        position: { my: "left top", at: "left bottom", of: this },
+                        select: function(event, ui) {
+                            const insertionText = ui.item.value;
+                            $("#command-textarea").val(insertionText);
+                            this.selectionStart = this.selectionEnd = cursorPos + insertionText.length;
+                            return false;
+                        }
+                    }).autocomplete("search", "");
+                }
+            });
+
+            function showAide(){
+                // Récupérer le texte
+                var text_zone = document.getElementById("command-textarea").value.trim();
+                var desc = "";
+                var ent_th = "";
+                var ent_th_arg = [];
+                var ret_th = "";
+                var ret_th_arg = "";
+                var ent_ret_prat = "";
+                var ret_err = "";
+
+                if(text_zone === "init()"){
+                    desc = "Permet d’initialiser le module “tableau de variation”.";
+                    ent_th = "Permet d’initialiser le module “tableau de variation”.";
+                    ent_th_arg = ["Argument 1", "Argument 2"];
+                    ret_th = "Permet d’initialiser le module “tableau de variation”.";
+                    ret_th_arg = "Permet d’initialiser le module “tableau de variation”.";
+                    ent_ret_prat = ["init() → [ 2, env1, 'Require Import Tabvar.' ]"];
+                    ret_err = "Permet d’initialiser le module “tableau de variation”.";
+                }
+                // Ajoutez d'autres conditions if nécessaires pour d'autres commandes...
+
+                // Afficher les valeurs dans le conteneur prévu à cet effet dans une liste à puce
+                document.querySelector(".box4").innerHTML = `
+                    <div class="box2">
+                        <ul>
+                            <li><label id="Title1">Description</label><br><p id="container1">${desc}</p></li>
+                            <li><label id="Title2">Entrée théorique</label><br><p id="container2">${ent_th}</p></li>
+                            <li><label id="Title3">Arguments de l'entrée</label><br><p id="container3">${ent_th_arg.length > 1 ? ent_th_arg.join('<br>') : ent_th_arg}</p></li>
+                            <li><label id="Title4">Retour théorique</label><br><p id="container4">${ret_th}</p></li>
+                            <li><label id="Title5">Arguments du retour</label><br><p id="container5">${ret_th_arg}</p></li>
+                            <li><label id="Title6">Entree et retour pratiques</label><br><p id="container6">${ent_ret_prat.join('<br>')}</p></li>
+                            <li><label id="Title7">Retour d'erreur</label><br><p id="container7">${ret_err}</p></li>
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Attachez la fonction showAide à un événement (par exemple, un bouton ou directement sur l'input)
+            $("#command-textarea").on('change', showAide);
+        });
+    </script>
+</body>
+</html>

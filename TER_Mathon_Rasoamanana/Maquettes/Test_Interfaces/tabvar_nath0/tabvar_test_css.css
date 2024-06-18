@@ -1,0 +1,94 @@
+/* Ajustement de la hauteur pour html et body */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.box1 {
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.box2 {
+    border: 1px solid #000;
+    display: flex;
+    justify-content:none ;
+    align-items:none ;
+    font-size: 24px;
+}
+
+.result-label {
+   display: block;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 80%;
+    height: 100%;
+    border-collapse: collapse;
+    border: 2px solid black; 
+}
+
+/* Style pour la première colonne */
+.col1 {
+    width: 100px; 
+    text-align: center;
+}
+
+/* Style pour les cellules */
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    position: relative;
+}
+
+/* Style pour les cellules éditables */
+td[contenteditable="true"] {
+    border: 2px solid black;
+    width: 150px; 
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+td[contenteditable="true"]:hover {
+    border: 2px solid black;
+    width: 150px; 
+    text-align: center;
+    background-color: #e9e9e9;
+}
+
+.actions-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.actions-menu button {
+    display: block;
+    padding: 5px 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 30px; 
+    height: 30px; 
+    text-align: left;
+}
+
+.actions-menu button:hover {
+    background-color: #ddd;
+}

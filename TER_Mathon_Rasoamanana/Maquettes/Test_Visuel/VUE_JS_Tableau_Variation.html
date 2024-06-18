@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Variation</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
+<body>
+    <div id="app">
+        <table border="1">
+            <!-- Ligne pour les valeurs de x -->
+            <tr>
+                <th>x</th>
+                <template v-for="(xValue , index) in xValues">
+                    <td :colspan="getXColspan(index)" align="center">{{ xValue }}</td>
+                </template>
+            </tr>
+
+            <!-- Ligne pour les signes de f'(x) -->
+            <tr>
+                <th>f'(x)</th>
+                <template v-for="(fPrimeValue, index) in fPrimeValues">
+                    <td :colspan="getColspan(index)" align="center">{{ fPrimeValue }}</td>
+                </template>
+            </tr>
+
+            <!-- Ligne pour les variations de f(x) -->
+                <!-- Valeurs de f(x) sur maximum  -->
+            <tbody>
+                <tr>
+                    <th rowspan="3">f(x)</th> <!-- Fusion de 3 lignes pour les valeurs atteintes sur les extremums x -->
+                    <td v-for="fMaxValue in fMaxValues" align="center">{{ fMaxValue }}</td>
+                </tr>
+                <!-- Variations de f(x)  -->
+                <tr>
+                    <template v-for="(fValue, index) in fValues">
+                        <td :colspan="getVariationColspan(index)" align="center">{{ fValue }}</td>
+                    </template>
+                </tr>
+                <!-- Valeurs de f(x) sur minimum  -->
+                <tr>
+                    <td v-for="fMinValue in fMinValues" align="center">{{ fMinValue }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <button @click="applyFunctionToXValues">Apply Function to xValues</button>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                xValues: ['-\u221E','','1','','2','','+\u221E'],
+                fPrimeValues: ['+', '\u25B2', '-', '||', '+'],
+                fMaxValues: ['', '', '', '8', '', '', '||', '', '', '+\u221E'],
+                fValues: ['\u2197', '\u2198','||', '\u2197'],
+                fMinValues: ['1', '', '', '', '', '-\u221E', '||', '0', '', '']
+            },
+            methods: {
+                // Pour les signes
+                getColspan(index) {
+                    const lastIndex = this.fPrimeValues.length - 1;
+                    if ((index === 0 && index === lastIndex) || (index === 0 || index === lastIndex)) {
+                        if (this.fPrimeValues[index] === '+' || this.fPrimeValues[index] === '-') {
+                            return 3; // Fusionner 3 colonnes uniquement si la cellule contient un signe
+                        }
+                    } else if (this.fPrimeValues[index] === '+' || this.fPrimeValues[index] === '-') {
+                        return 2; // Fusionner 2 colonnes
+                    } else {
+                        return 1; // Pas de fusion pour les autres cellules
+                    }
+                },
+                // Pour les variations
+                getVariationColspan(index) {
+                    if (this.fValues[index] === '\u2197' || this.fValues[index] === '\u2198') {
+                        return 3; // Fusionner 3 colonnes
+                    } else {
+                        return 1; // Pas de fusion pour les autres cellules
+                    }
+                },
+                // Pour les valeurs de x
+                getXColspan(index) {
+                    // Pour les valeurs de x
+                    if (this.xValues[index] == '') {
+                        return 2; // Fusionner 2 colonnes si la cellule est vide
+                    } else {
+                        return 1; // Pas de fusion pour les cellules vides
+                    }
+                },
+                // Nouvelle méthode pour transformer xValues
+                applyFunctionToXValues() {
+                    this.xValues = this.xValues.map(this.transformXValue);
+                },
+                // Exemple de fonction de transformation
+                transformXValue(xValue) {
+                    if (xValue === '-\u221E' || xValue === '+\u221E') {
+                        return xValue; // Ne pas changer les valeurs infinies
+                    } else if (xValue === '') {
+                        return xValue; // Ne pas changer les cellules vides
+                    } else {
+                        return parseFloat(xValue) * 2; // Exemple : multiplier par 2
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

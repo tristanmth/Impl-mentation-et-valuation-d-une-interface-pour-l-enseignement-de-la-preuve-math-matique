@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Line Interface</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 500px; margin: 50px auto; }
+        input, button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; }
+        .output { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Command Line Interface</h1>
+        <input type="text" id="command" placeholder="Enter command">
+        <button onclick="executeCommand()">Execute</button>
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        async function executeCommand() {
+            const command = document.getElementById('command').value;
+            const response = await fetch('/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ command }),
+            });
+            const result = await response.text();
+            document.getElementById('output').innerText = result;
+        }
+    </script>
+</body>
+</html>

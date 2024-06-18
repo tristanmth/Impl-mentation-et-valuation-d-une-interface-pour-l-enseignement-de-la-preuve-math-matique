@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <LINK rel="stylesheet" type="text/css" href="tabvar_test_css.css">
+        <title>Tableau Variation Test</title>
+        <script src="script_tabvar.js"></script>
+    </head>
+
+    <body>
+
+        <div class="container">
+            
+            <div class="box1">
+
+                <table id="tabvar">
+                        <tr> 
+                            <td class="col1">x</td>
+                            <td contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+                            <td contenteditable="false">
+                                <button type="button" onclick="addColumn(this)">+</button>
+                            </td>
+                            <td class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+                        </tr>       
+                    
+                        <tr>
+                            <td class="col1">f '(x)</td>
+                            <td colspan="2" class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+                            <td class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+                        </tr>           
+
+                        <tr>
+                            <td class="col1">f (x)</td>
+                            <td colspan="2" class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+                            <td class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+                        </tr> 
+                
+                </table>
+
+                <div id="actionsMenu" class="actions-menu">
+                    <button onclick="performAction('Suppression')">Supprimer</button>
+                </div>
+
+            </div>
+
+            <div class="box2">   
+                <button type="button" onclick="showContents()">?</button>             
+                <label id="resultLabel1"></label>
+                <label id="resultLabel2"></label>
+                <label id="resultLabel3"></label>
+            </div>
+
+            <div class="box1">Text</div>
+
+            <div class="box1">Retour</div>
+
+        </div>
+
+    </body>
+</html>

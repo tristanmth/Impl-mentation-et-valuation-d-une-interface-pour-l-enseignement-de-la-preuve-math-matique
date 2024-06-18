@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau Plein Écran</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="enter_function">f (x) = <input id="function-principal" placeholder="(2x-1)/(5x²-1)"/></div>
+
+<div class="enter_function">f '(x) = <input id="function-derivation" placeholder="-(10x²-10x+2)/(1-5x²)²"/></div>
+
+<button onclick="addExtraRow()">Ajouter une ligne </button>
+
+<table id="tabvar">
+
+    <tr>
+
+        <td class="col1"><input type="text" placeholder="x"/></td>
+
+        <td class="additional-column">
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <div class="value" type="button">-inf</div>
+                <div class="dropdown-content">
+                    <a href="#" onclick="changeValue(this)">Changer</a>
+                </div>
+            </div>
+        </td>
+
+        <td class="additional-column">
+            <button class="add-value" type="button" onclick="addColumn(this)">+</button>
+        </td>
+
+        <td class="additional-column">
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <div class="value" type="button">0</div>
+                <div class="dropdown-content">
+                    <a href="#" onclick="changeValue(this)">Changer</a>
+                    <a href="#" onclick="deleteColumns(this)">Supprimer</a>
+                </div>
+            </div>
+        </td>
+
+        <td class="additional-column">
+            <button class="add-value" type="button" onclick="addColumn(this)">+</button>
+        </td>
+
+        <td class="additional-column">
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <div class="value" type="button">+inf</div>
+                <div class="dropdown-content">
+                    <a href="#" onclick="changeValue(this)">Changer</a>
+                </div>
+            </div>
+        </td>
+
+    </tr>
+
+
+    <tr>
+
+        <td class="col1"><input type="text" id="before-last-cell-input" placeholder="f '(x)" /></td>
+
+        <td class="additional-column"></td>
+
+        <td class="additional-column">
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <button class="moreLess" type="button" >+-</button>
+                <div class="dropdown-content" style="display: none;">
+                    <a href="#" onclick="toggleMore(this, '-')">Négatif</a>
+                    <a href="#" onclick="toggleMore(this, '+')">Positif</a>
+                </div>
+            </div>
+
+        </td>
+
+        <td class="additional-column">
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <button class="VI" type="button" onclick="">|| 0 ∅</button> 
+                <div class="dropdown-content" style="display: none;">
+                    <a href="#" onclick="toggleVI(this, '||')">Valeur Interdite</a>
+                    <a href="#" onclick="toggleVI(this, '0')">Zéro</a>
+                    <a href="#" value="∅" onclick="toggleVI(this, '∅')">Vide</a>
+                </div>
+            </div>
+        </td>
+
+        <td class="additional-column">
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <button class="moreLess" type="button" >+-</button>
+                <div class="dropdown-content" style="display: none;">
+                    <a href="#" onclick="toggleMore(this, '-')">Négatif</a>
+                    <a href="#" onclick="toggleMore(this, '+')">Positif</a>
+                </div>
+            </div>
+        </td>
+
+        <td class="additional-column"></td>
+
+    </tr>
+
+
+    <tr>
+
+        <td class="col1"><input type="text" id="last-cell-input" placeholder="f (x)" /></td>
+
+        <td class="additional-column"></td>
+
+        <td class="additional-column">    
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <button class="increase" type="button" >&#8599 &#8600</button>
+                <div class="dropdown-content" style="display: none;">
+                    <a href="#" onclick="toggleIncrease(this, '&#8599')">Croissant</a>
+                    <a href="#" onclick="toggleIncrease(this, '&#8600')">Decroissant</a>
+                </div>
+            </div>
+        </td>
+
+        <td class="additional-column"></td>
+
+        <td class="additional-column">
+            <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                <button class="increase" type="button" >&#8599 &#8600</button>
+                <div class="dropdown-content" style="display: none;">
+                    <a href="#" onclick="toggleIncrease(this, '&#8599')">Croissant</a>
+                    <a href="#" onclick="toggleIncrease(this, '&#8600')">Decroissant</a>
+                </div>
+            </div>
+        </td>
+
+        <td class="additional-column"></td>
+
+    </tr>
+
+
+</table>
+
+<!-- Affiche ce que les lignes contiennent -->
+<div id="valuesContainer1"></div>
+<div id="valuesContainer2"></div>
+<div id="valuesContainer3"></div>
+<button id="maj_contain_value" onmouseover="showValues()">MAJ valeurs</button>
+
+</body>
+</html>

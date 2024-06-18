@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Récupérer Contenu des Cellules</title>
+    <style>
+        table, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<button type="button" onclick="showContents()">?</button>
+
+<label id="resultLabel1"></label><br>
+<label id="resultLabel2"></label><br>
+<label id="resultLabel3"></label><br>
+
+<table id="tabvar">
+    <tr> 
+        <td class="col1">x</td>
+        <td contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+        <td contenteditable="false">
+            <button type="button" onclick="addColumn(this)">+</button>
+        </td>
+        <td class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+    </tr>       
+    <tr>
+        <td class="col1">f '(x)</td>
+        <td colspan="2" class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+        <td class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+    </tr>           
+    <tr>
+        <td class="col1">f (x)</td>
+        <td colspan="2" class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+        <td class="col2" contenteditable="true" oncontextmenu="showActionsMenu(event)"></td>
+    </tr> 
+</table>
+
+<script>
+    function showContents() {
+        const table = document.getElementById('tabvar');
+        const rows = table.getElementsByTagName('tr');
+        
+        if (rows.length > 0) {
+            let firstRowContents = [];
+            let firstRowCells = rows[0].getElementsByTagName('td');
+            for (let i = 1; i < firstRowCells.length; i++) {
+                if (i % 2 !== 0) { // Vérifie si l'index est impair
+                    firstRowContents.push(firstRowCells[i].innerText);
+                }
+            }
+            document.getElementById('resultLabel1').innerText = 'Contenu des cellules de la 1ère ligne (index impair): ' + firstRowContents.join(', ');
+        }
+
+        if (rows.length > 1) {
+            let secondRowContents = [];
+            let secondRowCells = rows[1].getElementsByTagName('td');
+            for (let i = 1; i < secondRowCells.length; i++) {
+                secondRowContents.push(secondRowCells[i].innerText);
+            }
+            document.getElementById('resultLabel2').innerText = 'Contenu des cellules de la 2ème ligne: ' + secondRowContents.join(', ');
+        }
+
+        if (rows.length > 2) {
+            let thirdRowContents = [];
+            let thirdRowCells = rows[2].getElementsByTagName('td');
+            for (let i = 1; i < thirdRowCells.length; i++) {
+                thirdRowContents.push(thirdRowCells[i].innerText);
+            }
+            document.getElementById('resultLabel3').innerText = 'Contenu des cellules de la 3ème ligne: ' + thirdRowContents.join(', ');
+        }
+    }    
+</script>
+
+</body>
+</html>

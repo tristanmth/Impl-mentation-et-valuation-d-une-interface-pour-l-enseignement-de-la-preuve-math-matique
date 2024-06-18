@@ -1,0 +1,151 @@
+html, body {
+    height: 50%;
+    margin: 20px;
+}
+table {
+    width: 80%;
+    height: 100%;
+    border-collapse: collapse;
+}
+td {
+    border: 2px solid rgb(0, 0, 0);
+    width: 100px; /* Fixer la largeur de la cellule */
+    text-align: center;
+}
+.col1 {
+    width: 100px; /* Fixer la largeur de la cellule */
+    text-align: center;
+}
+.col2 {
+    width: calc(100% - 100px); /* La largeur restante pour la deuxième colonne */
+    text-align: center;
+}
+/* Styles pour les colonnes supplémentaires */
+.additional-column {
+    width: 100px; /* Fixer la largeur de la cellule */
+    text-align: center;
+    border: 2px solid rgb(0, 0, 0);
+    border-left: none;
+
+}
+
+/* Masquer les bordures verticales centrales */
+.additional-column:not(:first-child):not(:last-child) {
+    border-right: none;
+}
+
+.add-value {
+    background-color: #13a1e2; /* Changer la couleur de fond */
+    color: #000000; /* Changer la couleur du texte */
+    /*border: 1px solid #ccc; /* Changer la couleur de la bordure */
+    border-radius: 5px; /* Ajouter des coins arrondis */
+    padding: 5px 10px; /* Ajouter des marges internes */
+    font-size: 20px; /* Changer la taille de la police */
+    cursor: pointer; /* Changer le curseur au survol */
+}
+.add-value:hover {
+    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
+    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+}
+.add-value:active {
+    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
+    border-color: #999; /* Changer la couleur de la bordure lors du clic */
+}
+
+/* Cibler les boutons avec la classe 'moreLess' */
+button.moreLess {
+    background-color: #f0f0f0; /* Changer la couleur de fond */
+    color: #000000; /* Changer la couleur du texte */
+    /*border: 1px solid #ccc; /* Changer la couleur de la bordure */
+    border-radius: 5px; /* Ajouter des coins arrondis */
+    padding: 5px 10px; /* Ajouter des marges internes */
+    font-size: 20px; /* Changer la taille de la police */
+    cursor: pointer; /* Changer le curseur au survol */
+}
+button.moreLess:hover {
+    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
+    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+}
+button.moreLess:active {
+    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
+    border-color: #999; /* Changer la couleur de la bordure lors du clic */
+}
+
+
+/* Cibler les boutons avec la classe 'VI' */
+button.VI {
+    background-color: #29d36a; /* Changer la couleur de fond */
+    color: #000000; /* Changer la couleur du texte */
+    /*border: 1px solid #ccc; /* Changer la couleur de la bordure */
+    border-radius: 5px; /* Ajouter des coins arrondis */
+    padding: 5px 10px; /* Ajouter des marges internes */
+    font-size: 20px; /* Changer la taille de la police */
+    cursor: pointer; /* Changer le curseur au survol */
+}
+
+/* Ajouter un effet au survol */
+button.VI:hover {
+    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
+    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+}
+
+/* Ajouter un effet lorsqu'on clique */
+button.VI:active {
+    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
+    border-color: #999; /* Changer la couleur de la bordure lors du clic */
+}
+
+/* Cibler les boutons avec la classe 'increase' */
+button.increase {
+    background-color: #b91616; /* Changer la couleur de fond */
+    color: #000000; /* Changer la couleur du texte */
+    /*border: 1px solid #ccc; /* Changer la couleur de la bordure */
+    border-radius: 5px; /* Ajouter des coins arrondis */
+    padding: 5px 10px; /* Ajouter des marges internes */
+    font-size: 20px; /* Changer la taille de la police */
+    cursor: pointer; /* Changer le curseur au survol */
+}
+
+/* Ajouter un effet au survol */
+button.increase:hover {
+    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
+    border-color: #aaa; /* Changer la couleur de la bordure au survol */
+}
+
+/* Ajouter un effet lorsqu'on clique */
+button.increase:active {
+    background-color: #d0d0d0; /* Changer la couleur de fond lors du clic */
+    border-color: #999; /* Changer la couleur de la bordure lors du clic */
+}
+
+
+/* MENU DEROULANT */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}

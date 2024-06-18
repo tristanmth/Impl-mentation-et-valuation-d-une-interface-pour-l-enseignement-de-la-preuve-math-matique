@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de variation</title>
+    <link rel="stylesheet" href="styles_nath.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="script_nath.js"></script>
+    <script src="tabvar.js"></script>
+    <script src="interaction_API.js"></script>
+</head>
+<body>    
+    <div class="container">
+
+    <!------------------------DIVISION_1------------------------>
+    
+        <!--affichage du tableau-->
+        <div class="box1">
+
+            <table id="tabvar">
+                <!--Ligne des valeurs de x-->
+                <tr>
+                
+                    <td class="col1">x</td>
+                    
+                    <td class="additional-column" contenteditable="true">-9</td>
+
+                    <td class="additional-column">
+                        <button class="add-value" type="button" onclick="addColumn(this)">+</button>
+                    </td>
+
+                    <td class="additional-column" contenteditable="true">0</td>
+                    
+                    <td class="additional-column">
+                        <button class="add-value" type="button" onclick="addColumn(this)">+</button>
+                    </td>
+                    
+                    <td class="additional-column" contenteditable="true">sin 42 - 2</td>
+                </tr>
+
+                <!--Bouton pour ajouter une ligne-->
+                <tr id="add-row">
+                    <td colspan="6">           
+                        <button class="add-line" type="button" onclick="addExtraRow()">Add line</button>
+                    </td>
+                </tr>
+
+                <!--Ligne des signes de la fonction dérivée-->
+                <tr>
+                    <td class="col1">f ' (x)</td>
+                    <td class="additional-column"></td>
+                    <td class="additional-column">
+                        <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                            <button class="moreLess" type="button">+-</button>
+                            <div class="dropdown-content" style="display: none;">
+                                <a href="#" onclick="toggleMore(this, '-')">Négatif</a>
+                                <a href="#" onclick="toggleMore(this, '+')">Positif</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column">
+                        <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                            <button class="VI" type="button">|| 0 ∅</button> 
+                            <div class="dropdown-content" style="display: none;">
+                                <a href="#" onclick="toggleVI(this, '||')">Valeur Interdite</a>
+                                <a href="#" onclick="toggleVI(this, '0')">Zéro</a>
+                                <a href="#" onclick="toggleVI(this, '∅')">Vide</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column">
+                        <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                            <button class="moreLess" type="button">+-</button>
+                            <div class="dropdown-content" style="display: none;">
+                                <a href="#" onclick="toggleMore(this, '-')">Négatif</a>
+                                <a href="#" onclick="toggleMore(this, '+')">Positif</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column"></td>
+                </tr>
+
+                <!--Variations de la fonction principale-->
+                <tr>
+                    <td class="col1">f (x)</td>
+                    <td class="additional-column"></td>
+                    <td class="additional-column">    
+                        <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                            <button class="increase" type="button">&#8599 &#8600</button>
+                            <div class="dropdown-content" style="display: none;">
+                                <a href="#" onclick="toggleIncrease(this, '&#8599')">Croissant</a>
+                                <a href="#" onclick="toggleIncrease(this, '&#8600')">Decroissant</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column"></td>
+                    <td class="additional-column">
+                        <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                            <button class="increase" type="button">&#8599 &#8600</button>
+                            <div class="dropdown-content" style="display: none;">
+                                <a href="#" onclick="toggleIncrease(this, '&#8599')">Croissant</a>
+                                <a href="#" onclick="toggleIncrease(this, '&#8600')">Decroissant</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column"></td>
+                </tr>
+            </table>
+        </div>
+        
+    <!------------------------DIVISION_2------------------------>
+
+        <!--affichage du resultat de compare_values-->
+        <div class="box2">
+            <button onclick="compareExpressionsInRow(0)">comparer les valeurs de x</button>
+            <span id="comparison_result"></span>
+        </div>
+    
+    <!------------------------DIVISION_3------------------------>
+        
+        <!--zone textuelle-->
+        <div class="box3">       
+            <textarea id="command-textarea" placeholder="zone textuelle"></textarea>                   
+        </div>
+
+    <!------------------------DIVISION_4------------------------>
+
+        <!--affichage des contenus des cellules-->
+        <div class="box4">
+            <button id="maj_contain_value" class="top-right-button" onclick="showValues()">?</button>       
+        </div>       
+    </div>
+
+<!------------------------GESTION ZONE TEXTUELLE------------------------>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const inputField = document.getElementById('command-textarea');
+
+            inputField.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    onEnter(event);
+                }
+            });
+        });
+
+        function onEnter(event) {
+            const value = event.target.value;
+            //alert('Enter key pressed! Value: ' + value);
+            
+            if (value === 'show') {
+                showValues();
+            } else {
+                otherFunction();
+            }
+        }
+
+    </script>
+    
+</body>
+</html>

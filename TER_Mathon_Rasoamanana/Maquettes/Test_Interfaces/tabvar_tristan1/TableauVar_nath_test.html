@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de variation</title>
+    <link rel="stylesheet" href="styles_nath.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="script_nath.js"></script>
+    <script src="tabvar.js"></script>
+    <script src="interaction_API.js"></script>
+</head>
+<body>    
+    
+    <div class="container">  
+
+    <!------------------------DIVISION_1------------------------>
+    
+        <!--affichage du tableau-->
+        <div class="box1">
+
+
+            <div class="enter_function">
+                <input id="function-name"  style ="width: 10px;" placeholder="f" /> (<input id="var-name" style ="width: 10px;" placeholder="x"/>) = 
+                <input id="function-expr" placeholder="5*x*x-1"/>
+            </div>
+            <div class="enter_deriv_function"><span id="deriv-function">f</span> '(<span id="deriv-var">x</span>) = </span> <input id="function-derivation" placeholder="5*x"/></div>
+            
+            <button class="buton_removeline" onclick="removeMiddleRows()">Supprimer les lignes intermédiaires</button>
+            <button class="buton_addline" onclick="addExtraRow()">Ajouter une ligne </button>
+
+            <!-- <div id="functionsContainer"></div> -->
+
+            <table id="tabvar">
+            <tr>
+                <td class="col1"><span id="first-cell">x</span></td>
+                <td class="additional-column">
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <div class="value" type="button">-80</div>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="changeValue(this)">Changer</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="additional-column">
+                    <button class="add-value" type="button" onclick="addColumn(this)">+</button>
+                </td>
+                <td class="additional-column">
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <div class="value" type="button">0</div>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="changeValue(this)">Changer</a>
+                            <a href="#" onclick="deleteColumns(this)">Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="additional-column">
+                    <button class="add-value" type="button" onclick="addColumn(this)">+</button>
+                </td>
+                <td class="additional-column">
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <div class="value" type="button">80</div>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="changeValue(this)">Changer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col1" id="before-last-cell"><span id="before-last-cell-function">f</span> '(<span id="before-last-cell-var">x</span>)</span></td>
+                <td class="additional-column"></td>
+                <td class="additional-column">
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <button class="moreLess" type="button">+ -</button>
+                        <div class="dropdown-content" style="display: none;">
+                            <a href="#" onclick="toggleMore(this, '-')">Négatif</a>
+                            <a href="#" onclick="toggleMore(this, '+')">Positif</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="additional-column">
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <button class="VI" type="button">|| 0 ∅</button> 
+                        <div class="dropdown-content" style="display: none;">
+                            <a href="#" onclick="toggleVI(this, '||')">Valeur Interdite</a>
+                            <a href="#" onclick="toggleVI(this, '0')">Zéro</a>
+                            <a href="#" value="∅" style="display: none;" onclick="toggleVI(this, '∅')">Vide</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="additional-column">
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <button class="moreLess" type="button">+ -</button>
+                        <div class="dropdown-content" style="display: none;">
+                            <a href="#" onclick="toggleMore(this, '-')">Négatif</a>
+                            <a href="#" onclick="toggleMore(this, '+')">Positif</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="additional-column"></td>
+            </tr>
+            <tr>
+                <td class="col1" id="last-cell"><span id="last-cell-function">f</span> (<span id="last-cell-var">x</span>)</span></td>
+                <td class="additional-column"></td>
+                <td class="additional-column">    
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <button class="increase" type="button">&#8599 &#8600</button>
+                        <div class="dropdown-content" style="display: none;">
+                            <a href="#" onclick="toggleIncrease(this, '&#8599')">Croissant</a>
+                            <a href="#" onclick="toggleIncrease(this, '&#8600')">Décroissant</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="additional-column"></td>
+                <td class="additional-column">
+                    <div class="dropdown" onmouseover="showDropdown(this)" onmouseleave="hideDropdown(this)">
+                        <button class="increase" type="button">&#8599 &#8600</button>
+                        <div class="dropdown-content" style="display: none;">
+                            <a href="#" onclick="toggleIncrease(this, '&#8599')">Croissant</a>
+                            <a href="#" onclick="toggleIncrease(this, '&#8600')">Décroissant</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="additional-column"></td>
+            </tr>
+            </table>
+
+        </div>
+         
+    <!------------------------DIVISION_2------------------------>
+
+         <!--affichage du resultat de compare_values-->
+         <div class="box2">
+            <button onclick="compareExpressionsInRow()">comparer les valeurs de x</button>
+            <button onclick="validation_funMain()">valider main function</button>
+            <button onclick="validation_funDeriv()">valider deriv function</button>
+            <button onclick="verification_funDeriv()">verifier deriv function</button>
+            <button onclick="validation_subFun()">Les sous fonctions</button>
+
+            <span id="comparison_result"></span>
+            <div id="error-message" class="error-message"></div>
+        </div>
+    
+    <!------------------------DIVISION_3------------------------>
+        
+        <!--zone textuelle-->
+        <div class="box3">       
+            <textarea id="command-textarea" placeholder="Entrer une commande"></textarea>                   
+        </div>
+
+    <!------------------------DIVISION_4------------------------>
+
+        <!--affichage des contenus des cellules-->
+        <div class="box4">
+            <input id="command-input" placeholder="Rechercher une fonction"></input>                  
+        </div>       
+    </div>
+
+
+<!------------------------GESTION ZONE D'EDITION POUR LES FONCTIONS------------------------>
+    <script>
+        changeVarFun();
+
+        document.addEventListener('DOMContentLoaded', initializeTable);
+
+        // Ajoute un gestionnaire d'événement pour la soumission du formulaire
+        document.getElementById('tabvar').addEventListener('submit', function(event) {
+        // Empêche la soumission du formulaire si la validation échoue
+        if (!validateForm()) {
+            event.preventDefault(); // Annule la soumission
+        }
+        });
+
+        // Ajoute des écouteurs d'événements aux champs de saisie
+        document.getElementById('function-name').addEventListener('input', function() {
+            // Récupére la valeur saisie dans la zone de texte
+            var funName = this.value;
+
+        // Si la valeur est vide, utilisez "x" par défaut
+        if (funName.trim() === '') {
+            funName = 'f';
+        }
+
+        // Met à jour le contenu de la cellule avec la nouvelle valeur
+        var derivFun = document.getElementById("deriv-function");
+        derivFun.textContent = funName;
+        var beforeLastCellSpan = document.getElementById("before-last-cell-function");
+        beforeLastCellSpan.textContent = funName;
+        var lastCellSpan = document.getElementById("last-cell-function");
+        lastCellSpan.textContent = funName;
+
+        });
+
+        document.getElementById('var-name').addEventListener('input', function() {
+        // Récupére la valeur saisie dans la zone de texte
+        var varName = this.value;
+
+        // Si la valeur est vide, utilise "x" par défaut
+        if (varName.trim() === '') {
+            varName = 'x';
+        }
+
+        // Met à jour le contenu de la cellule avec la nouvelle valeur
+        var derivVar = document.getElementById("deriv-var");
+        derivVar.textContent = varName;
+        var firstCellSpan = document.getElementById("first-cell");
+        firstCellSpan.textContent = varName;
+        var beforeLastCellSpan = document.getElementById("before-last-cell-var");
+        beforeLastCellSpan.textContent = varName;
+        var lastCellSpan = document.getElementById("last-cell-var");
+        lastCellSpan.textContent = varName;
+        });
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const inputField = document.getElementById('command-textarea');
+
+            inputField.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    onEnter(event);
+                }
+            });
+        });
+
+
+    </script>
+    
+</body>
+</html>

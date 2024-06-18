@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Tableau de Variation</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="tabvar.js"></script>
+    <script src="api_2.js"></script>
+    <link rel="stylesheet" href="styles_nath.css">
+
+    <style>
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <table id="tabvar">
+            <!--Ligne des valeurs de x-->
+            <tr>
+                <td class="col1"><span id="first-cell">x</span></td>
+                <template v-for="(value, index) in xValues" :key="index">
+                    <td class="additional-column">
+                        <div class="dropdown">
+                            <div class="value" type="button">{{ value }}</div>
+                            <div class="dropdown-content">
+                                <a href="#" @click="changeValue(index)">Changer</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column" v-if="index < xValues.length - 1">
+                        <button class="add-value" type="button" @click="addColumn(index)">+</button>
+                    </td>
+                </template>
+            </tr>
+            
+            <!--Ligne des signes de f-->
+            <tr>
+                <td class="col1" id="before-last-cell"><span id="before-last-cell-function">f</span> '(<span id="before-last-cell-var">x</span>)</span></td>
+                <template v-for="(sign, index) in fPrimeValues" :key="index">
+                    <td class="additional-column">
+                        <div class="dropdown">
+                            <button class="moreLess" type="button">{{ sign }}</button>
+                            <div class="dropdown-content">
+                                <a href="#" @click="toggleMore(index, '-')">Négatif</a>
+                                <a href="#" @click="toggleMore(index, '+')">Positif</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column" v-if="index < fPrimeValues.length - 1"></td>
+                </template>
+            </tr>
+            <!--Ligne des variation de f-->
+            <tr>
+                <td class="col1" id="last-cell"><span id="last-cell-function">f</span> (<span id="last-cell-var">x</span>)</span></td>
+                <template v-for="(variation, index) in fValues" :key="index">
+                    <td class="additional-column">
+                        <div class="dropdown">
+                            <button class="increase" type="button">{{ variation }}</button>
+                            <div class="dropdown-content">
+                                <a href="#" @click="toggleIncrease(index, '↗')">Croissant</a>
+                                <a href="#" @click="toggleIncrease(index, '↘')">Décroissant</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="additional-column" v-if="index < fValues.length - 1"></td>
+                </template>
+            </tr>
+        </table>
+        <button @click="compareExpressionsInRow">Comparer</button>
+        <span id="comparison_result"></span>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                xValues: ["-9", "1", "4"],
+                fPrimeValues: ['+-','|| 0 ∅', '+-'],
+                fValues: ['↗ ↘', '', '↗ ↘'],
+            },
+            methods: {
+                changeValue(index) {
+                    const newValue = prompt("Entrez une nouvelle valeur:");
+                    if (newValue) {
+                        this.xValues.splice(index, 1, newValue);
+                    }
+                    console.log(this.xValues);
+                },
+                addColumn(index) {
+                    this.xValues.splice(index + 1, 0, '0');                    
+                    this.fPrimeValues.splice(index + 1, 0, '|| 0');                    
+                    this.fPrimeValues.splice(index + 2, 0, '+-');                    
+                    this.fValues.splice(index + 1, 0, '↗ ↘');                    
+                    console.log(this.xValues);
+                },
+                toggleMore(index, sign) {
+                    this.fPrimeValues.splice(index, 1, sign);
+                },
+                toggleIncrease(index, direction) {
+                    this.fValues.splice(index, 1, direction);
+                },
+                compareExpressionsInRow() {
+                window.compareExpressionsInRow(this.xValues);
+                },
+            }
+        });
+    </script>
+</body>
+</html>
